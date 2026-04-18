@@ -1,0 +1,139 @@
+\documentclass{article} 
+\usepackage{iclr2025_conference,times}
+
+
+\input{math_commands.tex}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{url}
+
+
+\title{Graph Neural Networks for System Call Graph-based Intrusion Detection}
+
+
+\author{Raphaël Faure \& Tristan Beruard \& Sacha  \\
+CentraleSupélec \\
+\texttt{\{raphael.faure2, tristan.beruard\}@student-cs.fr} \\
+}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\iclrfinalcopy 
+\begin{document}
+
+
+\maketitle
+
+
+\begin{abstract}
+
+Host-based intrusion detection relies on identifying deviations in the low-level behavior of processes. System call traces are a natural signal for this task because they describe the interaction between a program and the operating system at a fine granularity. In this project, we model each trace as a directed weighted syscall graph and compare classical graph scoring with graph neural networks on ADFA-LD \cite{adfa} and two LID-DS scenarios \cite{lid_ds}. Our benchmark includes a PageRank-based anomaly detector inspired directly by our exploratory notebook, standard graph backbones such as GCN \cite{gcn}, GraphSAGE, and GAT, and a weighted GCN variant denoted WGCN+. The results show that graph representations are informative on both datasets, but that the ranking of models depends strongly on the scenario: GAT performs best on ADFA-LD, while the PageRank baseline remains highly competitive on the bruteforce LID-DS scenario.
+ 
+
+\end{abstract}
+
+\section{Introduction/Motivation}
+
+Host-based intrusion detection remains difficult because malicious activity often appears as a subtle deformation of otherwise legitimate execution traces. System call logs are attractive in this setting because they are available at the operating-system boundary and provide a detailed view of process behavior. However, a purely sequential representation can make it difficult to distinguish a harmless local reordering from a structural change in the transition pattern of the process.
+
+Our starting point is that a syscall trace is not only a sequence, but also a transition system. If two syscalls interact repeatedly, if a subset of calls becomes a hub, or if unusual loops emerge, this structure is naturally visible in a graph representation. This motivates our main research questions: does a syscall-graph representation improve host-based intrusion detection, which graph models are the most relevant for these data, and how stable are these conclusions across datasets and attack scenarios?
+
+The practical motivation is straightforward. Better host-based intrusion detection can support endpoint protection, anomaly triage, incident response, and post-compromise forensics. From a machine learning perspective, the project also provides a useful case study for comparing interpretable graph scoring methods with learned graph representations on a real cybersecurity task.
+
+
+
+\section{Problem Definition}
+
+Let a syscall trace be a sequence $s=(x_1,\dots,x_T)$, where each token $x_t$ is either an integer syscall identifier, as in ADFA-LD, or a syscall name extracted from a raw trace, as in LID-DS. From each sequence we build a directed weighted graph $G=(V,E,w)$ where each node in $V$ is a unique syscall and each edge $(u,v)\in E$ records the number of times syscall $u$ is immediately followed by syscall $v$ in the trace.
+
+The supervised task is binary graph classification. Given a trace graph $G_i$ and its label $y_i\in\{0,1\}$, with $0$ denoting normal behavior and $1$ an attack trace, we seek a predictor $f(G_i)\rightarrow \hat{y}_i$. Because the datasets are imbalanced and scenario-dependent, we evaluate the predictor with accuracy, precision, recall, F1 score, and ROC-AUC rather than relying on accuracy alone.
+
+We also consider an anomaly-detection baseline based on the PageRank notebook. In that setting, the training procedure builds a normal library from benign traces only and the decision is taken from an anomaly score computed on sliding windows. The problem then becomes threshold-based anomaly scoring instead of direct discriminative classification.
+
+\section{Related Work} 
+System call based intrusion detection has historically been studied through sequence models and symbolic matching rules because the data naturally arrives as an ordered stream. Graph-based approaches argue that transition structure itself is discriminative and should therefore be modeled explicitly. The system-call graph formulation of \cite{syscall_graphs} is particularly relevant here because it motivates representing a trace by its directed transition graph rather than by sequence statistics only.
+
+On the representation-learning side, graph neural networks provide a natural way to combine local transition structure with node-level attributes. GCN \cite{gcn} is a standard baseline based on neighborhood aggregation, while GraphSAGE and GAT extend this idea respectively through flexible aggregation and attention over neighbors. Although these families are widely used in graph learning, they remain comparatively underexplored for host-based intrusion detection on syscall graphs.
+
+Our classical baseline is related to the PageRank anomaly scoring strategy of \cite{pagerank_ids}. The original idea is to derive transition suspiciousness from a PageRank-weighted normal graph and then measure the distance between observed windows and a library of normal patterns. Our implementation keeps this core mechanism but adapts it to a multi-trace training pipeline and to reproducible Hydra-based experiments.
+
+
+
+
+
+
+
+\section{Methodology} 
+
+\paragraph{Datasets and preprocessing.}
+We use two host-based intrusion detection datasets. ADFA-LD \cite{adfa} provides integer-encoded syscall traces with separate normal and attack folders. LID-DS \cite{lid_ds} provides richer per-sample archives containing raw \texttt{.sc} traces and metadata. For LID-DS, our final study focuses on the scenarios \texttt{Bruteforce\_CWE-307} and \texttt{CVE-2014-0160}. To stay consistent with the exploratory notebook, our LID-DS pipeline keeps the original \texttt{test} traces and performs a local stratified train/validation/test split on that subset.
+
+\paragraph{Graph construction and node features.}
+Each trace is converted into a directed weighted graph. For ADFA-LD, node features include relative frequency, in/out degree, weighted degree, PageRank, and self-loop indicators. For LID-DS, we enrich the representation with process diversity, return-value statistics, and temporal gap statistics recovered from the raw traces. Each graph is then turned into a PyTorch Geometric object with both numeric node features and a learned embedding for the syscall identity.
+
+\paragraph{PageRank baseline.}
+The PageRank detector follows the same core logic as our exploratory notebook implementation. We build a normal transition graph, compute PageRank scores, derive a suspiciousness map $k(u,v)$ from the weighted outgoing contribution of each transition, slide a fixed-size window over the observed sequence, and score each observed window by its minimum weighted distance to a normal pattern. The final anomaly score is the proportion of windows whose distance exceeds a threshold.
+
+Relative to the notebook, the production implementation makes three engineering adaptations. First, the pattern library is built from all normal training traces instead of a single file. Second, we use pattern subsampling, caching, and prefix-based candidate filtering to keep evaluation tractable on larger datasets. Third, the distance and anomaly thresholds are selected on the validation split rather than fixed manually. The mathematical core of the notebook is therefore preserved while the training protocol is generalized to our datasets.
+
+\paragraph{GNN models.}
+We compare four graph neural architectures. The plain GCN baseline applies edge-weighted GCN layers to the concatenation of learned syscall embeddings and numeric node features. GraphSAGE replaces the convolution operator with mean aggregation over neighbors. GAT adds attention coefficients over incoming messages. Finally, our main architecture, denoted \textbf{WGCN+}, keeps weighted GCN propagation but adds layer normalization after each message-passing layer and uses hybrid graph pooling obtained by concatenating mean pooling and max pooling. This architecture is designed for small-to-medium syscall graphs where both average transition behavior and strong localized motifs can be informative.
+
+\paragraph{Training protocol.}
+All GNN models are trained with Adam and selected using validation F1. The best validation checkpoint is then evaluated on the held-out test split. The report figures and tables are exported automatically from the training pipeline so that the manuscript remains synchronized with the actual experimental artifacts.
+\IfFileExists{generated_graph_inspection.tex}{\input{generated_graph_inspection.tex}}{}
+
+\section{Evaluation}
+
+\paragraph{Experimental setting.}
+The benchmark combines PageRank, GCN, GraphSAGE, GAT, and WGCN+ on ADFA-LD. On LID-DS, we report PageRank and WGCN+ on the two retained scenarios. The third scenario initially considered, \texttt{CWE-89-SQL-injection}, was removed from the final study because preprocessing and graph construction on this scenario exceeded the available memory budget in our environment.
+
+\paragraph{Main observations.}
+Three conclusions stand out from the benchmark. First, on ADFA-LD, all GNN variants clearly outperform the PageRank baseline in ROC-AUC and F1, and GAT achieves the best overall test performance. This suggests that, on ADFA-LD, heterogeneous transition importance matters and is captured well by attention. Second, on the LID-DS bruteforce scenario, both approaches are very strong, but the PageRank baseline is actually the best method in our experiments, which indicates that this scenario is dominated by highly regular local transition anomalies that can already be captured by the window-based normal-pattern library. Third, on the harder \texttt{CVE-2014-0160} scenario, PageRank remains imperfect but usable, whereas WGCN+ reaches high ROC-AUC yet collapses to zero F1 under the default classification threshold. This means the model still ranks traces reasonably well, but its final decision boundary is poorly calibrated under this scenario.
+
+\paragraph{Interpretation and limitations.}
+The graph inspection and the benchmark together suggest that there is no single winner across all operating conditions. Dense and repetitive scenarios such as bruteforce attacks are particularly favorable to the PageRank detector because its scoring rule is explicitly based on deviations from frequent normal transition patterns. By contrast, ADFA-LD benefits more from learned graph representations, especially attention-based ones. WGCN+ remains useful as a structured in-house architecture because it combines weighted propagation with feature-rich node descriptions and remains competitive across datasets, even when it is not always the best model. The current study nevertheless remains limited by CPU-only training, by the exclusion of the SQL injection scenario, and by the absence of a learned threshold-calibration stage for GNN outputs.
+\IfFileExists{generated_results.tex}{\input{generated_results.tex}}{}
+
+
+
+\section{Conclusions}
+This project shows that syscall graphs form a useful and operational representation for host-based intrusion detection. The graph construction step preserves transition structure while enabling both classical graph scoring and graph neural message passing. In our experiments, GAT provides the strongest results on ADFA-LD, whereas the PageRank baseline remains remarkably effective on the bruteforce LID-DS scenario. The main lesson is therefore not that one model dominates everywhere, but that graph-based modeling exposes structure that different families of methods can exploit in complementary ways.
+
+Several extensions follow naturally from this work. A first direction is to calibrate the GNN decision threshold on the validation split in the same spirit as the PageRank baseline, especially for difficult imbalanced scenarios such as \texttt{CVE-2014-0160}. A second direction is to include the SQL injection scenario once a more memory-efficient preprocessing path is available. Finally, richer dynamic or provenance-aware graph constructions could help incorporate longer-range temporal context beyond immediate syscall transitions.
+
+
+\section{References}
+
+\bibliographystyle{iclr2025_conference}
+\bibliography{references}
+
+
+
+
+% % - https://www.cs.unm.edu/~forrest/publications/int_decssc.pdf -> Intrusion Detection using Sequences of System Calls; simple sequence models
+% - A Modern and Sophisticated Host Based Intrusion Detection Data Set LID-DS dataset
+% - https://old.dbs.uni-leipzig.de/file/Intrusion-Detection-on-System-Call-Graphs.pdf -> Intrusion Detection on System Call Graphs, classification using features 
+% - https://arxiv.org/pdf/2509.16625 -> Self-Supervised Learning of Graph Representations for Network Intrusion Detection; GNN and self supervised but for network graphs 
+% % - https://www.researchgate.net/publication/348264451_Intrusion_Detection_System_Based_on_Integrated_System_Calls_Graph_and_Neural_Networks/fulltext/5ff592ba92851c13feeffc1e/Intrusion-Detection-System-Based-on-Integrated-System-Calls-Graph-and-Neural-Networks.pdf -> using graphs and text features 
+% - Detecting Intrusions Using System Calls:  Alternative Data Models -> different basic data models 
+% - Graph2vec 
+% - Semi-Supervised Classification with Graph Convolutional Networks
+% - An Anomaly Intrusion Detection Method Based on PageRank Algorithm : https://ieeexplore-ieee-org.ezproxy.universite-paris-saclay.fr/document/6682431
+% - more advanced dataset : https://old.dbs.uni-leipzig.de/file/BSI-LID-DS.pdf 
+% Return values of syscalls + data buffers + syscall args
+% - Temporal Graph Networks for Deep Learning on Dynamic Graphs
+% - DeepWalk 
+% - https://epubs.siam.org/doi/10.1137/1.9781611975673.67 ; anomaly detection 
+
+% Representation learning : \verb|https://ieeexplore-ieee-org.ezproxy.universite-paris-saclay.fr/stamp/stamp.jsp?tp=&arnumber=10646725|
+% Provenance graph from system logs -> Word2vec + GNN embeddings to classify nodes
+
+% System call graphs :  \verb|https://old.dbs.uni-leipzig.de/file/Intrusion-Detection-on-System-Call-Graphs.pdf|
+% In this paper, each node is an n-gram instead of single system calls.
+
+
+
+\end{document}

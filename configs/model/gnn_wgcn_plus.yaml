@@ -1,0 +1,8 @@
+name: gnn
+architecture: wgcn_plus
+embedding_dim: 32
+hidden_dim: 64
+num_layers: 3
+dropout: 0.3
+pooling: mean
+gat_heads: 4

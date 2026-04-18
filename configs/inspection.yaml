@@ -1,0 +1,31 @@
+report:
+  output_dir: "${hydra:runtime.cwd}/report "
+  tex_filename: generated_graph_inspection.tex
+  json_filename: generated_graph_inspection.json
+  figures_subdir: figures
+  nodes_edges_figure: graph_nodes_edges_scatter.pdf
+  representative_graphs_figure: representative_syscall_graphs.pdf
+
+datasets:
+  - name: adfa_ld
+    root_dir: ${hydra:runtime.cwd}/data/ADFA-LD
+    scenario: all
+    split_strategy: random
+  - name: lid_ds
+    root_dir: ${hydra:runtime.cwd}/data/LIS-DS
+    scenario: Bruteforce_CWE-307
+    direction_filter: ">"
+    keep_only_successful_parsed_lines: true
+    split_strategy: original_test_resplit
+    resplit_source_split: test
+  - name: lid_ds
+    root_dir: ${hydra:runtime.cwd}/data/LIS-DS
+    scenario: CVE-2014-0160
+    direction_filter: ">"
+    keep_only_successful_parsed_lines: true
+    split_strategy: original_test_resplit
+    resplit_source_split: test
+
+hydra:
+  run:
+    dir: outputs/inspection/${now:%Y-%m-%d}/${now:%H-%M-%S}

@@ -1,0 +1,11 @@
+name: pagerank
+window_size: 6
+distance_threshold: 0.5
+anomaly_rate_threshold: 0.2
+default_edge_weight: 0.1
+max_patterns: 1000
+
+threshold_search:
+  enabled: true
+  distance_thresholds: [0.2, 0.35, 0.5, 0.65, 0.8]
+  anomaly_rate_thresholds: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5]

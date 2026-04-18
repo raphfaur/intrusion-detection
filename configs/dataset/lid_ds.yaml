@@ -1,0 +1,7 @@
+name: lid_ds
+root_dir: ${hydra:runtime.cwd}/data/LIS-DS
+scenario: all
+split_strategy: original_test_resplit
+resplit_source_split: test
+direction_filter: ">"
+keep_only_successful_parsed_lines: true
