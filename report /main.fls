@@ -35,9 +35,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/helvetic/phvb.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/times.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/times.sty
-INPUT ./math_commands.tex
-INPUT ./math_commands.tex
-INPUT math_commands.tex
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amsmath/amsmath.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amsmath/amsmath.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amsmath/amsopn.sty

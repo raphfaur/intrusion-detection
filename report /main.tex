@@ -1,13 +1,484 @@
-\documentclass{article} 
+\documentclass{article}
 \usepackage{iclr2025_conference,times}
-
-
-\input{math_commands.tex}
-
+\usepackage{amsmath,amsfonts,bm}
 \usepackage{graphicx}
 \usepackage[hypertexnames=false]{hyperref}
 \usepackage{url}
 \usepackage{float}
+
+% ---- Math commands (inlined from math_commands.tex) ----
+
+% Figure caption helpers
+\newcommand{\figleft}{{\em (Left)}}
+\newcommand{\figcenter}{{\em (Center)}}
+\newcommand{\figright}{{\em (Right)}}
+\newcommand{\figtop}{{\em (Top)}}
+\newcommand{\figbottom}{{\em (Bottom)}}
+\newcommand{\captiona}{{\em (a)}}
+\newcommand{\captionb}{{\em (b)}}
+\newcommand{\captionc}{{\em (c)}}
+\newcommand{\captiond}{{\em (d)}}
+
+\newcommand{\newterm}[1]{{\bf #1}}
+
+% Cross-references
+\def\figref#1{figure~\ref{#1}}
+\def\Figref#1{Figure~\ref{#1}}
+\def\twofigref#1#2{figures \ref{#1} and \ref{#2}}
+\def\quadfigref#1#2#3#4{figures \ref{#1}, \ref{#2}, \ref{#3} and \ref{#4}}
+\def\secref#1{section~\ref{#1}}
+\def\Secref#1{Section~\ref{#1}}
+\def\twosecrefs#1#2{sections \ref{#1} and \ref{#2}}
+\def\secrefs#1#2#3{sections \ref{#1}, \ref{#2} and \ref{#3}}
+\def\eqref#1{equation~\ref{#1}}
+\def\Eqref#1{Equation~\ref{#1}}
+\def\plaineqref#1{\ref{#1}}
+\def\chapref#1{chapter~\ref{#1}}
+\def\Chapref#1{Chapter~\ref{#1}}
+\def\rangechapref#1#2{chapters\ref{#1}--\ref{#2}}
+\def\algref#1{algorithm~\ref{#1}}
+\def\Algref#1{Algorithm~\ref{#1}}
+\def\twoalgref#1#2{algorithms \ref{#1} and \ref{#2}}
+\def\Twoalgref#1#2{Algorithms \ref{#1} and \ref{#2}}
+\def\partref#1{part~\ref{#1}}
+\def\Partref#1{Part~\ref{#1}}
+\def\twopartref#1#2{parts \ref{#1} and \ref{#2}}
+
+% Math operators
+\def\ceil#1{\lceil #1 \rceil}
+\def\floor#1{\lfloor #1 \rfloor}
+\def\1{\bm{1}}
+\newcommand{\train}{\mathcal{D}}
+\newcommand{\valid}{\mathcal{D_{\mathrm{valid}}}}
+\newcommand{\test}{\mathcal{D_{\mathrm{test}}}}
+\def\eps{{\epsilon}}
+
+% Random variables
+\def\reta{{\textnormal{$\eta$}}}
+\def\ra{{\textnormal{a}}}
+\def\rb{{\textnormal{b}}}
+\def\rc{{\textnormal{c}}}
+\def\rd{{\textnormal{d}}}
+\def\re{{\textnormal{e}}}
+\def\rf{{\textnormal{f}}}
+\def\rg{{\textnormal{g}}}
+\def\rh{{\textnormal{h}}}
+\def\ri{{\textnormal{i}}}
+\def\rj{{\textnormal{j}}}
+\def\rk{{\textnormal{k}}}
+\def\rl{{\textnormal{l}}}
+\def\rn{{\textnormal{n}}}
+\def\ro{{\textnormal{o}}}
+\def\rp{{\textnormal{p}}}
+\def\rq{{\textnormal{q}}}
+\def\rr{{\textnormal{r}}}
+\def\rs{{\textnormal{s}}}
+\def\rt{{\textnormal{t}}}
+\def\ru{{\textnormal{u}}}
+\def\rv{{\textnormal{v}}}
+\def\rw{{\textnormal{w}}}
+\def\rx{{\textnormal{x}}}
+\def\ry{{\textnormal{y}}}
+\def\rz{{\textnormal{z}}}
+
+% Random vectors
+\def\rvepsilon{{\mathbf{\epsilon}}}
+\def\rvtheta{{\mathbf{\theta}}}
+\def\rva{{\mathbf{a}}}
+\def\rvb{{\mathbf{b}}}
+\def\rvc{{\mathbf{c}}}
+\def\rvd{{\mathbf{d}}}
+\def\rve{{\mathbf{e}}}
+\def\rvf{{\mathbf{f}}}
+\def\rvg{{\mathbf{g}}}
+\def\rvh{{\mathbf{h}}}
+\def\rvu{{\mathbf{i}}}
+\def\rvj{{\mathbf{j}}}
+\def\rvk{{\mathbf{k}}}
+\def\rvl{{\mathbf{l}}}
+\def\rvm{{\mathbf{m}}}
+\def\rvn{{\mathbf{n}}}
+\def\rvo{{\mathbf{o}}}
+\def\rvp{{\mathbf{p}}}
+\def\rvq{{\mathbf{q}}}
+\def\rvr{{\mathbf{r}}}
+\def\rvs{{\mathbf{s}}}
+\def\rvt{{\mathbf{t}}}
+\def\rvv{{\mathbf{v}}}
+\def\rvw{{\mathbf{w}}}
+\def\rvx{{\mathbf{x}}}
+\def\rvy{{\mathbf{y}}}
+\def\rvz{{\mathbf{z}}}
+
+% Elements of random vectors
+\def\erva{{\textnormal{a}}}
+\def\ervb{{\textnormal{b}}}
+\def\ervc{{\textnormal{c}}}
+\def\ervd{{\textnormal{d}}}
+\def\erve{{\textnormal{e}}}
+\def\ervf{{\textnormal{f}}}
+\def\ervg{{\textnormal{g}}}
+\def\ervh{{\textnormal{h}}}
+\def\ervi{{\textnormal{i}}}
+\def\ervj{{\textnormal{j}}}
+\def\ervk{{\textnormal{k}}}
+\def\ervl{{\textnormal{l}}}
+\def\ervm{{\textnormal{m}}}
+\def\ervn{{\textnormal{n}}}
+\def\ervo{{\textnormal{o}}}
+\def\ervp{{\textnormal{p}}}
+\def\ervq{{\textnormal{q}}}
+\def\ervr{{\textnormal{r}}}
+\def\ervs{{\textnormal{s}}}
+\def\ervt{{\textnormal{t}}}
+\def\ervu{{\textnormal{u}}}
+\def\ervv{{\textnormal{v}}}
+\def\ervw{{\textnormal{w}}}
+\def\ervx{{\textnormal{x}}}
+\def\ervy{{\textnormal{y}}}
+\def\ervz{{\textnormal{z}}}
+
+% Random matrices
+\def\rmA{{\mathbf{A}}}
+\def\rmB{{\mathbf{B}}}
+\def\rmC{{\mathbf{C}}}
+\def\rmD{{\mathbf{D}}}
+\def\rmE{{\mathbf{E}}}
+\def\rmF{{\mathbf{F}}}
+\def\rmG{{\mathbf{G}}}
+\def\rmH{{\mathbf{H}}}
+\def\rmI{{\mathbf{I}}}
+\def\rmJ{{\mathbf{J}}}
+\def\rmK{{\mathbf{K}}}
+\def\rmL{{\mathbf{L}}}
+\def\rmM{{\mathbf{M}}}
+\def\rmN{{\mathbf{N}}}
+\def\rmO{{\mathbf{O}}}
+\def\rmP{{\mathbf{P}}}
+\def\rmQ{{\mathbf{Q}}}
+\def\rmR{{\mathbf{R}}}
+\def\rmS{{\mathbf{S}}}
+\def\rmT{{\mathbf{T}}}
+\def\rmU{{\mathbf{U}}}
+\def\rmV{{\mathbf{V}}}
+\def\rmW{{\mathbf{W}}}
+\def\rmX{{\mathbf{X}}}
+\def\rmY{{\mathbf{Y}}}
+\def\rmZ{{\mathbf{Z}}}
+
+% Elements of random matrices
+\def\ermA{{\textnormal{A}}}
+\def\ermB{{\textnormal{B}}}
+\def\ermC{{\textnormal{C}}}
+\def\ermD{{\textnormal{D}}}
+\def\ermE{{\textnormal{E}}}
+\def\ermF{{\textnormal{F}}}
+\def\ermG{{\textnormal{G}}}
+\def\ermH{{\textnormal{H}}}
+\def\ermI{{\textnormal{I}}}
+\def\ermJ{{\textnormal{J}}}
+\def\ermK{{\textnormal{K}}}
+\def\ermL{{\textnormal{L}}}
+\def\ermM{{\textnormal{M}}}
+\def\ermN{{\textnormal{N}}}
+\def\ermO{{\textnormal{O}}}
+\def\ermP{{\textnormal{P}}}
+\def\ermQ{{\textnormal{Q}}}
+\def\ermR{{\textnormal{R}}}
+\def\ermS{{\textnormal{S}}}
+\def\ermT{{\textnormal{T}}}
+\def\ermU{{\textnormal{U}}}
+\def\ermV{{\textnormal{V}}}
+\def\ermW{{\textnormal{W}}}
+\def\ermX{{\textnormal{X}}}
+\def\ermY{{\textnormal{Y}}}
+\def\ermZ{{\textnormal{Z}}}
+
+% Vectors
+\def\vzero{{\bm{0}}}
+\def\vone{{\bm{1}}}
+\def\vmu{{\bm{\mu}}}
+\def\vtheta{{\bm{\theta}}}
+\def\va{{\bm{a}}}
+\def\vb{{\bm{b}}}
+\def\vc{{\bm{c}}}
+\def\vd{{\bm{d}}}
+\def\ve{{\bm{e}}}
+\def\vf{{\bm{f}}}
+\def\vg{{\bm{g}}}
+\def\vh{{\bm{h}}}
+\def\vi{{\bm{i}}}
+\def\vj{{\bm{j}}}
+\def\vk{{\bm{k}}}
+\def\vl{{\bm{l}}}
+\def\vm{{\bm{m}}}
+\def\vn{{\bm{n}}}
+\def\vo{{\bm{o}}}
+\def\vp{{\bm{p}}}
+\def\vq{{\bm{q}}}
+\def\vr{{\bm{r}}}
+\def\vs{{\bm{s}}}
+\def\vt{{\bm{t}}}
+\def\vu{{\bm{u}}}
+\def\vv{{\bm{v}}}
+\def\vw{{\bm{w}}}
+\def\vx{{\bm{x}}}
+\def\vy{{\bm{y}}}
+\def\vz{{\bm{z}}}
+
+% Elements of vectors
+\def\evalpha{{\alpha}}
+\def\evbeta{{\beta}}
+\def\evepsilon{{\epsilon}}
+\def\evlambda{{\lambda}}
+\def\evomega{{\omega}}
+\def\evmu{{\mu}}
+\def\evpsi{{\psi}}
+\def\evsigma{{\sigma}}
+\def\evtheta{{\theta}}
+\def\eva{{a}}
+\def\evb{{b}}
+\def\evc{{c}}
+\def\evd{{d}}
+\def\eve{{e}}
+\def\evf{{f}}
+\def\evg{{g}}
+\def\evh{{h}}
+\def\evi{{i}}
+\def\evj{{j}}
+\def\evk{{k}}
+\def\evl{{l}}
+\def\evm{{m}}
+\def\evn{{n}}
+\def\evo{{o}}
+\def\evp{{p}}
+\def\evq{{q}}
+\def\evr{{r}}
+\def\evs{{s}}
+\def\evt{{t}}
+\def\evu{{u}}
+\def\evv{{v}}
+\def\evw{{w}}
+\def\evx{{x}}
+\def\evy{{y}}
+\def\evz{{z}}
+
+% Matrices
+\def\mA{{\bm{A}}}
+\def\mB{{\bm{B}}}
+\def\mC{{\bm{C}}}
+\def\mD{{\bm{D}}}
+\def\mE{{\bm{E}}}
+\def\mF{{\bm{F}}}
+\def\mG{{\bm{G}}}
+\def\mH{{\bm{H}}}
+\def\mI{{\bm{I}}}
+\def\mJ{{\bm{J}}}
+\def\mK{{\bm{K}}}
+\def\mL{{\bm{L}}}
+\def\mM{{\bm{M}}}
+\def\mN{{\bm{N}}}
+\def\mO{{\bm{O}}}
+\def\mP{{\bm{P}}}
+\def\mQ{{\bm{Q}}}
+\def\mR{{\bm{R}}}
+\def\mS{{\bm{S}}}
+\def\mT{{\bm{T}}}
+\def\mU{{\bm{U}}}
+\def\mV{{\bm{V}}}
+\def\mW{{\bm{W}}}
+\def\mX{{\bm{X}}}
+\def\mY{{\bm{Y}}}
+\def\mZ{{\bm{Z}}}
+\def\mBeta{{\bm{\beta}}}
+\def\mPhi{{\bm{\Phi}}}
+\def\mLambda{{\bm{\Lambda}}}
+\def\mSigma{{\bm{\Sigma}}}
+
+% Tensors
+\DeclareMathAlphabet{\mathsfit}{\encodingdefault}{\sfdefault}{m}{sl}
+\SetMathAlphabet{\mathsfit}{bold}{\encodingdefault}{\sfdefault}{bx}{n}
+\newcommand{\tens}[1]{\bm{\mathsfit{#1}}}
+\def\tA{{\tens{A}}}
+\def\tB{{\tens{B}}}
+\def\tC{{\tens{C}}}
+\def\tD{{\tens{D}}}
+\def\tE{{\tens{E}}}
+\def\tF{{\tens{F}}}
+\def\tG{{\tens{G}}}
+\def\tH{{\tens{H}}}
+\def\tI{{\tens{I}}}
+\def\tJ{{\tens{J}}}
+\def\tK{{\tens{K}}}
+\def\tL{{\tens{L}}}
+\def\tM{{\tens{M}}}
+\def\tN{{\tens{N}}}
+\def\tO{{\tens{O}}}
+\def\tP{{\tens{P}}}
+\def\tQ{{\tens{Q}}}
+\def\tR{{\tens{R}}}
+\def\tS{{\tens{S}}}
+\def\tT{{\tens{T}}}
+\def\tU{{\tens{U}}}
+\def\tV{{\tens{V}}}
+\def\tW{{\tens{W}}}
+\def\tX{{\tens{X}}}
+\def\tY{{\tens{Y}}}
+\def\tZ{{\tens{Z}}}
+
+% Graph sets
+\def\gA{{\mathcal{A}}}
+\def\gB{{\mathcal{B}}}
+\def\gC{{\mathcal{C}}}
+\def\gD{{\mathcal{D}}}
+\def\gE{{\mathcal{E}}}
+\def\gF{{\mathcal{F}}}
+\def\gG{{\mathcal{G}}}
+\def\gH{{\mathcal{H}}}
+\def\gI{{\mathcal{I}}}
+\def\gJ{{\mathcal{J}}}
+\def\gK{{\mathcal{K}}}
+\def\gL{{\mathcal{L}}}
+\def\gM{{\mathcal{M}}}
+\def\gN{{\mathcal{N}}}
+\def\gO{{\mathcal{O}}}
+\def\gP{{\mathcal{P}}}
+\def\gQ{{\mathcal{Q}}}
+\def\gR{{\mathcal{R}}}
+\def\gS{{\mathcal{S}}}
+\def\gT{{\mathcal{T}}}
+\def\gU{{\mathcal{U}}}
+\def\gV{{\mathcal{V}}}
+\def\gW{{\mathcal{W}}}
+\def\gX{{\mathcal{X}}}
+\def\gY{{\mathcal{Y}}}
+\def\gZ{{\mathcal{Z}}}
+
+% Sets (blackboard bold)
+\def\sA{{\mathbb{A}}}
+\def\sB{{\mathbb{B}}}
+\def\sC{{\mathbb{C}}}
+\def\sD{{\mathbb{D}}}
+\def\sF{{\mathbb{F}}}
+\def\sG{{\mathbb{G}}}
+\def\sH{{\mathbb{H}}}
+\def\sI{{\mathbb{I}}}
+\def\sJ{{\mathbb{J}}}
+\def\sK{{\mathbb{K}}}
+\def\sL{{\mathbb{L}}}
+\def\sM{{\mathbb{M}}}
+\def\sN{{\mathbb{N}}}
+\def\sO{{\mathbb{O}}}
+\def\sP{{\mathbb{P}}}
+\def\sQ{{\mathbb{Q}}}
+\def\sR{{\mathbb{R}}}
+\def\sS{{\mathbb{S}}}
+\def\sT{{\mathbb{T}}}
+\def\sU{{\mathbb{U}}}
+\def\sV{{\mathbb{V}}}
+\def\sW{{\mathbb{W}}}
+\def\sX{{\mathbb{X}}}
+\def\sY{{\mathbb{Y}}}
+\def\sZ{{\mathbb{Z}}}
+
+% Entries of a matrix
+\def\emLambda{{\Lambda}}
+\def\emA{{A}}
+\def\emB{{B}}
+\def\emC{{C}}
+\def\emD{{D}}
+\def\emE{{E}}
+\def\emF{{F}}
+\def\emG{{G}}
+\def\emH{{H}}
+\def\emI{{I}}
+\def\emJ{{J}}
+\def\emK{{K}}
+\def\emL{{L}}
+\def\emM{{M}}
+\def\emN{{N}}
+\def\emO{{O}}
+\def\emP{{P}}
+\def\emQ{{Q}}
+\def\emR{{R}}
+\def\emS{{S}}
+\def\emT{{T}}
+\def\emU{{U}}
+\def\emV{{V}}
+\def\emW{{W}}
+\def\emX{{X}}
+\def\emY{{Y}}
+\def\emZ{{Z}}
+\def\emSigma{{\Sigma}}
+
+% Entries of a tensor
+\newcommand{\etens}[1]{\mathsfit{#1}}
+\def\etLambda{{\etens{\Lambda}}}
+\def\etA{{\etens{A}}}
+\def\etB{{\etens{B}}}
+\def\etC{{\etens{C}}}
+\def\etD{{\etens{D}}}
+\def\etE{{\etens{E}}}
+\def\etF{{\etens{F}}}
+\def\etG{{\etens{G}}}
+\def\etH{{\etens{H}}}
+\def\etI{{\etens{I}}}
+\def\etJ{{\etens{J}}}
+\def\etK{{\etens{K}}}
+\def\etL{{\etens{L}}}
+\def\etM{{\etens{M}}}
+\def\etN{{\etens{N}}}
+\def\etO{{\etens{O}}}
+\def\etP{{\etens{P}}}
+\def\etQ{{\etens{Q}}}
+\def\etR{{\etens{R}}}
+\def\etS{{\etens{S}}}
+\def\etT{{\etens{T}}}
+\def\etU{{\etens{U}}}
+\def\etV{{\etens{V}}}
+\def\etW{{\etens{W}}}
+\def\etX{{\etens{X}}}
+\def\etY{{\etens{Y}}}
+\def\etZ{{\etens{Z}}}
+
+% Probability / statistics
+\newcommand{\pdata}{p_{\rm{data}}}
+\newcommand{\ptrain}{\hat{p}_{\rm{data}}}
+\newcommand{\Ptrain}{\hat{P}_{\rm{data}}}
+\newcommand{\pmodel}{p_{\rm{model}}}
+\newcommand{\Pmodel}{P_{\rm{model}}}
+\newcommand{\ptildemodel}{\tilde{p}_{\rm{model}}}
+\newcommand{\pencode}{p_{\rm{encoder}}}
+\newcommand{\pdecode}{p_{\rm{decoder}}}
+\newcommand{\precons}{p_{\rm{reconstruct}}}
+\newcommand{\laplace}{\mathrm{Laplace}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Ls}{\mathcal{L}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\emp}{\tilde{p}}
+\newcommand{\lr}{\alpha}
+\newcommand{\reg}{\lambda}
+\newcommand{\rect}{\mathrm{rectifier}}
+\newcommand{\softmax}{\mathrm{softmax}}
+\newcommand{\sigmoid}{\sigma}
+\newcommand{\softplus}{\zeta}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\standarderror}{\mathrm{SE}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\normlzero}{L^0}
+\newcommand{\normlone}{L^1}
+\newcommand{\normltwo}{L^2}
+\newcommand{\normlp}{L^p}
+\newcommand{\normmax}{L^\infty}
+\newcommand{\parents}{Pa}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Tr}{Tr}
+\let\ab\allowbreak
+
+% ---- End of math commands ----
 
 
 \title{Graph Neural Networks for System Call Graph-based Intrusion Detection}
@@ -21,7 +492,7 @@ CentraleSupélec \\
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
 
-\iclrfinalcopy 
+\iclrfinalcopy
 \begin{document}
 
 
@@ -31,7 +502,7 @@ CentraleSupélec \\
 \begin{abstract}
 
 Host-based intrusion detection aims to detect malicious executions from low-level traces of process activity. System calls are a natural signal for this objective because they directly expose how a program interacts with the operating system. In this report, we study two complementary questions that match the course objectives: how the choice of representation changes the learning problem, and how this choice affects robustness across tasks. We therefore compare graph-based and sequence-based models on ADFA-LD \cite{adfa} and two LID-DS scenarios \cite{lid_ds}. Our graph pipeline converts each trace into a directed weighted syscall graph and evaluates both a classical PageRank-based anomaly detector and several graph neural networks, namely GCN \cite{gcn}, GraphSAGE \cite{graphsage}, GAT \cite{gat}, and a weighted GCN variant denoted WGCN+. We also benchmark sequence-only baselines to situate the graph approach with respect to the historical syscall-sequence literature \cite{unm_syscalls}. The experiments show that graph representations are informative, but their advantage depends on the regime: GAT is strongest on ADFA-LD, whereas the PageRank and TF-IDF baselines are extremely competitive on the bruteforce LID-DS scenario. A transfer experiment across LID-DS attack families further shows that all methods degrade substantially out of distribution, with PageRank and WGCN+ remaining the most stable.
- 
+
 
 \end{abstract}
 
@@ -53,7 +524,7 @@ The supervised task is binary graph classification. Given a trace graph $G_i$ an
 
 We also consider an anomaly-detection baseline based on PageRank. In that setting, the training procedure builds a normal library from benign traces only and the decision is taken from an anomaly score computed on sliding windows. Concretely, for a fixed window length $m$, a trace $s=(x_1,\dots,x_T)$ is decomposed into overlapping subsequences $w_t=(x_t,\dots,x_{t+m-1})$ for $t=1,\dots,T-m+1$. Each window is compared with a library of normal patterns, and the final anomaly score is the fraction of windows whose distance to that library exceeds a chosen threshold. The problem then becomes threshold-based anomaly scoring instead of direct discriminative classification.
 
-\section{Related Work} 
+\section{Related Work}
 System call based intrusion detection has historically been studied through sequence models and symbolic matching rules because the data naturally arrives as an ordered stream. The classical UNM line of work \cite{unm_syscalls,alt_syscall_models} showed that short syscall windows already provide a strong anomaly-detection signal, which remains an important baseline for any newer approach. Graph-based approaches instead argue that transition structure itself is discriminative and should therefore be modeled explicitly. The system-call graph formulation of Grimmer et al. \cite{syscall_graphs} is particularly relevant here because it motivates representing a trace by its directed transition graph rather than by sequence statistics only.
 
 On the representation-learning side, graph neural networks provide a natural way to combine local transition structure with node-level attributes. GCN \cite{gcn} is a standard baseline based on neighborhood aggregation, while GraphSAGE \cite{graphsage} and GAT \cite{gat} extend this idea respectively through flexible aggregation and attention over neighbors. Although these families are widely used in graph learning, they remain comparatively underexplored for host-based intrusion detection on syscall graphs.
@@ -61,12 +532,7 @@ On the representation-learning side, graph neural networks provide a natural way
 Our classical baseline is related to the PageRank anomaly scoring strategy of \cite{pagerank_ids}. The original idea is to derive transition suspiciousness from a PageRank-weighted normal graph and then measure the distance between observed windows and a library of normal patterns. Our implementation keeps this core mechanism but adapts it to a multi-trace training pipeline and to reproducible Hydra-based experiments.
 
 
-
-
-
-
-
-\section{Methodology} 
+\section{Methodology}
 
 \paragraph{Datasets and preprocessing.}
 We use two host-based intrusion detection datasets. ADFA-LD \cite{adfa} provides integer-encoded syscall traces with separate normal and attack folders. LID-DS \cite{lid_ds} provides richer per-sample archives containing raw \texttt{.sc} traces and metadata. For LID-DS, our final study focuses on the scenarios \texttt{Bruteforce\_CWE-307} and \texttt{CVE-2014-0160}. Within each retained scenario, we use a standard stratified train/validation/test split.
@@ -150,7 +616,7 @@ At inference time, the anomaly score is the squared distance $\|g-c\|_2^2$, and 
 
 \paragraph{Cross-scenario protocol.}
 To study out-of-distribution generalization on LID-DS, we define a transfer setting from \texttt{Bruteforce\_CWE-307} to \texttt{CVE-2014-0160}. We train and tune the model on the source scenario only, then evaluate it unchanged on the target scenario. This protocol deliberately introduces a scenario shift between source and target attacks while keeping model selection entirely on the source scenario.
-\IfFileExists{generated_graph_inspection.tex}{\input{generated_graph_inspection.tex}}{}
+\input{generated_graph_inspection.tex}
 
 \section{Evaluation}
 
@@ -174,8 +640,7 @@ The transfer experiment in Table~\ref{tab:cross-scenario-generalization} reveals
 
 \paragraph{Interpretation and limitations.}
 The graph inspection in Table~\ref{tab:graph-inspection} and Figure~\ref{fig:graph-inspection}, the benchmark in Table~\ref{tab:automated-results}, and the ablations in Table~\ref{tab:feature-ablation} together suggest that there is no single winner across all operating conditions, but that the best method can be understood from the data regime. Dense and repetitive scenarios such as bruteforce attacks are particularly favorable to local pattern methods: PageRank and TF-IDF both perform extremely well there because they focus on repeated transition motifs. The feature ablation further shows that WGCN+ benefits from preserving both richer node descriptors and transition multiplicities, which is coherent with the fact that these graphs encode repeated process behavior. By contrast, ADFA-LD benefits more from learned graph representations, especially attention-based ones, although the strong ADFA-LD sequence baselines also show that sequential information alone already carries a large portion of the signal. Finally, the transfer experiment highlights a major limitation of all discriminative approaches considered here: training on one attack scenario does not ensure robust generalization to another. The current study nevertheless remains limited by CPU-only training, by the exclusion of the SQL injection scenario, and by the absence of a more systematic threshold-calibration stage for GNN outputs.
-\IfFileExists{generated_results.tex}{\input{generated_results.tex}}{}
-
+\input{generated_results.tex}
 
 
 \section{Conclusions}
@@ -188,31 +653,6 @@ Several extensions follow naturally from this work. A first direction is to cali
 
 \bibliographystyle{iclr2025_conference}
 \bibliography{references}
-
-
-
-
-% % - https://www.cs.unm.edu/~forrest/publications/int_decssc.pdf -> Intrusion Detection using Sequences of System Calls; simple sequence models
-% - A Modern and Sophisticated Host Based Intrusion Detection Data Set LID-DS dataset
-% - https://old.dbs.uni-leipzig.de/file/Intrusion-Detection-on-System-Call-Graphs.pdf -> Intrusion Detection on System Call Graphs, classification using features 
-% - https://arxiv.org/pdf/2509.16625 -> Self-Supervised Learning of Graph Representations for Network Intrusion Detection; GNN and self supervised but for network graphs 
-% % - https://www.researchgate.net/publication/348264451_Intrusion_Detection_System_Based_on_Integrated_System_Calls_Graph_and_Neural_Networks/fulltext/5ff592ba92851c13feeffc1e/Intrusion-Detection-System-Based-on-Integrated-System-Calls-Graph-and-Neural-Networks.pdf -> using graphs and text features 
-% - Detecting Intrusions Using System Calls:  Alternative Data Models -> different basic data models 
-% - Graph2vec 
-% - Semi-Supervised Classification with Graph Convolutional Networks
-% - An Anomaly Intrusion Detection Method Based on PageRank Algorithm : https://ieeexplore-ieee-org.ezproxy.universite-paris-saclay.fr/document/6682431
-% - more advanced dataset : https://old.dbs.uni-leipzig.de/file/BSI-LID-DS.pdf 
-% Return values of syscalls + data buffers + syscall args
-% - Temporal Graph Networks for Deep Learning on Dynamic Graphs
-% - DeepWalk 
-% - https://epubs.siam.org/doi/10.1137/1.9781611975673.67 ; anomaly detection 
-
-% Representation learning : \verb|https://ieeexplore-ieee-org.ezproxy.universite-paris-saclay.fr/stamp/stamp.jsp?tp=&arnumber=10646725|
-% Provenance graph from system logs -> Word2vec + GNN embeddings to classify nodes
-
-% System call graphs :  \verb|https://old.dbs.uni-leipzig.de/file/Intrusion-Detection-on-System-Call-Graphs.pdf|
-% In this paper, each node is an n-gram instead of single system calls.
-
 
 
 \end{document}

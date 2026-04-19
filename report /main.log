@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.6.3)  19 APR 2026 18:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.6.3)  19 APR 2026 18:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -77,7 +77,7 @@ LaTeX Info: Redefining \cite on input line 694.
 \cv@tmpc=\count275
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/times.sty
 Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
-) (./math_commands.tex (/usr/local/texlive/2025/texmf-dist/tex/latex/amsmath/amsmath.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2024/11/05 v2.17t AMS math features
 \@mathmargin=\skip62
 
@@ -157,9 +157,6 @@ Package bm Info: No bold for \OMX/cmex/m/n, using \pmb.
 Package bm Info: No bold for \U/msa/m/n, using \pmb.
 Package bm Info: No bold for \U/msb/m/n, using \pmb.
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
-)
-LaTeX Font Info:    Overwriting math alphabet `\mathsfit' in version `bold'
-(Font)                  OT1/phv/m/sl --> OT1/phv/bx/n on input line 314.
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
  (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/graphics.sty
@@ -290,7 +287,9 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks24
 \@floatcapt=\box57
 )
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 25.
+LaTeX Font Info:    Overwriting math alphabet `\mathsfit' in version `bold'
+(Font)                  OT1/phv/m/sl --> OT1/phv/bx/n on input line 300.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 496.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
@@ -300,24 +299,24 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 496.
+LaTeX Font Info:    ... okay on input line 496.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 496.
+LaTeX Font Info:    ... okay on input line 496.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 496.
+LaTeX Font Info:    ... okay on input line 496.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 496.
+LaTeX Font Info:    ... okay on input line 496.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 496.
+LaTeX Font Info:    ... okay on input line 496.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 496.
+LaTeX Font Info:    ... okay on input line 496.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 496.
+LaTeX Font Info:    ... okay on input line 496.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 496.
+LaTeX Font Info:    ... okay on input line 496.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 496.
+LaTeX Font Info:    ... okay on input line 496.
  (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count302
@@ -337,36 +336,36 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 25.
+Package hyperref Info: Link coloring OFF on input line 496.
  (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
 
-Underfull \hbox (badness 2884) in paragraph at lines 29--29
+Underfull \hbox (badness 2884) in paragraph at lines 500--500
 []\OT1/ptm/m/sc/17.28 Graph Neu-ral Net-works for Sys-tem Call
  []
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 29.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 500.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 29.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 500.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 29.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 500.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 29.
+LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 500.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/omspcr.fd
 File: omspcr.fd 
 )
 LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 29.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 500.
 
-Overfull \hbox (2.51506pt too wide) in paragraph at lines 29--29
+Overfull \hbox (2.51506pt too wide) in paragraph at lines 500--500
 [][] 
  []
 
@@ -394,7 +393,7 @@ Package pdftex.def Info: figures/graph_nodes_edges_scatter.pdf  used on input li
 [5 <./figures/graph_nodes_edges_scatter.pdf>]
 
 [6] (./generated_results.tex
-Underfull \hbox (badness 10000) in paragraph at lines 176--140
+Underfull \hbox (badness 10000) in paragraph at lines 642--140
 
  []
 
@@ -424,10 +423,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 98B793873E9A8129AB8AF75E096DF3B7;1963.
  ) 
 Here is how much of TeX's memory you used:
- 11373 strings out of 473190
- 171016 string characters out of 5715801
- 594487 words of memory out of 5000000
- 34390 multiletter control sequences out of 15000+600000
+ 11367 strings out of 473190
+ 170891 string characters out of 5715801
+ 594503 words of memory out of 5000000
+ 34387 multiletter control sequences out of 15000+600000
  577596 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,79p,1534b,553s stack positions out of 10000i,1000n,20000p,200000b,200000s
