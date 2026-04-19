@@ -526,6 +526,7 @@ def _run_supervised_experiment(
         "history": history,
         "validation": val_metrics,
         "test": test_metrics,
+        "test_scores": {"y_true": test_metrics.get("y_true", []), "y_score": test_metrics.get("y_score", [])},
     }
 
 
@@ -746,6 +747,7 @@ def run_gnn_experiment(
             "pretrain_history": result.get("pretrain_history", []),
             "validation": result.get("validation", {}),
             "test": result.get("test", {}),
+            "test_scores": result.get("test_scores", {}),
             "checkpoint": result.get("checkpoint"),
             "thresholds": result.get("thresholds"),
         },

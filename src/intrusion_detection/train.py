@@ -14,6 +14,7 @@ from omegaconf import DictConfig
 from intrusion_detection.data import load_trace_samples, split_lid_transfer_samples, split_samples
 from intrusion_detection.reporting import export_results_to_latex
 from intrusion_detection.trainer import run_gnn_experiment, run_pagerank_experiment, run_sequence_experiment
+from intrusion_detection.trainer_temporal import run_tgn_experiment
 
 CONFIG_DIR = str(Path(__file__).resolve().parents[2] / "configs")
 
@@ -119,6 +120,14 @@ def main(cfg: DictConfig) -> None:
             test_samples=test_samples,
             output_dir=output_dir,
         )
+    elif cfg.model.name in {"tgn", "tgn_hybrid"}:
+        result = run_tgn_experiment(
+            cfg=cfg,
+            train_samples=train_samples,
+            val_samples=val_samples,
+            test_samples=test_samples,
+            output_dir=output_dir,
+        )
     else:
         raise ValueError(f"Unsupported model: {cfg.model.name}")
 
@@ -128,6 +137,8 @@ def main(cfg: DictConfig) -> None:
         encoding="utf-8",
     )
     if cfg.report.enabled:
+        from intrusion_detection.reporting import export_results_to_latex
+
         payload["report_export"] = export_results_to_latex(
             cfg=cfg,
             payload=payload,

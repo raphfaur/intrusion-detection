@@ -1,0 +1,13 @@
+name: tgn
+use_static_features: false
+memory_dim: 32
+time_dim: 16
+hidden_dim: 64
+dropout: 0.3
+max_events: 2000
+grad_accum_steps: 32
+chunk_size: 50
+class_weight_mode: sqrt_balanced
+class_weight_cap: 4.0
+decision_threshold: auto
+selection_metric: val_roc_auc

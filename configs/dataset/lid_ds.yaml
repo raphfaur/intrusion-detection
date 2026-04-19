@@ -5,6 +5,7 @@ split_strategy: original_test_resplit
 resplit_source_split: test
 direction_filter: ">"
 keep_only_successful_parsed_lines: true
+loader_workers: 1
 transfer:
   enabled: false
   source_scenario: Bruteforce_CWE-307

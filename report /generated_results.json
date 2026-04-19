@@ -2,8 +2,6 @@
   "adfa_ld_gat": {
     "architecture": "gat",
     "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
     "experiment_name": "adfa_ld_gat",
     "history": [
       {
@@ -37,9 +35,7 @@
     "loaded_scenarios": [],
     "model": "gnn",
     "model_label": "gnn:gat",
-    "node_feature_profile": "full",
     "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-18/16-23-58",
-    "paradigm": "supervised",
     "plots": {
       "f1_curve": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/report /figures/adfa_ld_gat_f1.pdf",
       "loss_curve": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/report /figures/adfa_ld_gat_loss.pdf"
@@ -65,320 +61,9 @@
       "support": 1190
     }
   },
-  "adfa_ld_gat_diagnostic": {
-    "architecture": "gat",
-    "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "adfa_ld_gat_diagnostic",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.9036414565826331,
-        "train/f1": 0.5667506297229219,
-        "train/loss": 0.3274196683692665,
-        "val/accuracy": 0.9201680672268907,
-        "val/f1": 0.652014652014652,
-        "val/roc_auc": 0.9297655197312857
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.9299719887955182,
-        "train/f1": 0.7086247086247086,
-        "train/loss": 0.22653010320596667,
-        "val/accuracy": 0.9260504201680673,
-        "val/f1": 0.7027027027027027,
-        "val/roc_auc": 0.9564048507823532
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.9501400560224089,
-        "train/f1": 0.8,
-        "train/loss": 0.19114036653556077,
-        "val/accuracy": 0.9495798319327731,
-        "val/f1": 0.7931034482758621,
-        "val/roc_auc": 0.970208047244196
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.949859943977591,
-        "train/f1": 0.7748427672955975,
-        "train/loss": 0.16681014472196082,
-        "val/accuracy": 0.946218487394958,
-        "val/f1": 0.751937984496124,
-        "val/roc_auc": 0.9739022235975991
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.9560224089635855,
-        "train/f1": 0.8261351052048727,
-        "train/loss": 0.15070097099373989,
-        "val/accuracy": 0.9529411764705882,
-        "val/f1": 0.8169934640522876,
-        "val/roc_auc": 0.9765326318911216
-      },
-      {
-        "epoch": 6.0,
-        "train/accuracy": 0.9613445378151261,
-        "train/f1": 0.8528784648187633,
-        "train/loss": 0.13346121434737987,
-        "val/accuracy": 0.9563025210084034,
-        "val/f1": 0.8354430379746836,
-        "val/roc_auc": 0.9817225306075084
-      },
-      {
-        "epoch": 7.0,
-        "train/accuracy": 0.9658263305322129,
-        "train/f1": 0.8594470046082949,
-        "train/loss": 0.13132854451318415,
-        "val/accuracy": 0.9596638655462185,
-        "val/f1": 0.8344827586206897,
-        "val/roc_auc": 0.9816516127368495
-      },
-      {
-        "epoch": 8.0,
-        "train/accuracy": 0.9663865546218487,
-        "train/f1": 0.8645598194130926,
-        "train/loss": 0.11931255669319997,
-        "val/accuracy": 0.9554621848739496,
-        "val/f1": 0.8239202657807309,
-        "val/roc_auc": 0.9808908573970564
-      },
-      {
-        "epoch": 9.0,
-        "train/accuracy": 0.965266106442577,
-        "train/f1": 0.8655097613882863,
-        "train/loss": 0.11971819280576305,
-        "val/accuracy": 0.9605042016806723,
-        "val/f1": 0.8488745980707395,
-        "val/roc_auc": 0.9821673790689127
-      },
-      {
-        "epoch": 10.0,
-        "train/accuracy": 0.9700280112044818,
-        "train/f1": 0.8804469273743016,
-        "train/loss": 0.12423871871950079,
-        "val/accuracy": 0.965546218487395,
-        "val/f1": 0.8619528619528619,
-        "val/roc_auc": 0.9829990522793648
-      },
-      {
-        "epoch": 11.0,
-        "train/accuracy": 0.9703081232492997,
-        "train/f1": 0.8847826086956522,
-        "train/loss": 0.10444107344713198,
-        "val/accuracy": 0.9621848739495799,
-        "val/f1": 0.8562300319488818,
-        "val/roc_auc": 0.9839725612311342
-      },
-      {
-        "epoch": 12.0,
-        "train/accuracy": 0.9719887955182073,
-        "train/f1": 0.8913043478260869,
-        "train/loss": 0.10292656155569213,
-        "val/accuracy": 0.9630252100840336,
-        "val/f1": 0.8571428571428571,
-        "val/roc_auc": 0.9860549677968397
-      },
-      {
-        "epoch": 13.0,
-        "train/accuracy": 0.9675070028011205,
-        "train/f1": 0.8763326226012793,
-        "train/loss": 0.0982594304225024,
-        "val/accuracy": 0.9495798319327731,
-        "val/f1": 0.8181818181818182,
-        "val/roc_auc": 0.9769968215899787
-      },
-      {
-        "epoch": 14.0,
-        "train/accuracy": 0.9781512605042016,
-        "train/f1": 0.9105504587155964,
-        "train/loss": 0.10432975103541249,
-        "val/accuracy": 0.973109243697479,
-        "val/f1": 0.8918918918918919,
-        "val/roc_auc": 0.9862419330922125
-      },
-      {
-        "epoch": 15.0,
-        "train/accuracy": 0.9773109243697479,
-        "train/f1": 0.9098998887652948,
-        "train/loss": 0.09904738113659771,
-        "val/accuracy": 0.973109243697479,
-        "val/f1": 0.8918918918918919,
-        "val/roc_auc": 0.9862741684879665
-      },
-      {
-        "epoch": 16.0,
-        "train/accuracy": 0.9761904761904762,
-        "train/f1": 0.9037372593431483,
-        "train/loss": 0.09033804851002386,
-        "val/accuracy": 0.9663865546218487,
-        "val/f1": 0.8648648648648649,
-        "val/roc_auc": 0.9846688457794196
-      },
-      {
-        "epoch": 17.0,
-        "train/accuracy": 0.9775910364145658,
-        "train/f1": 0.9095022624434389,
-        "train/loss": 0.10252998443920405,
-        "val/accuracy": 0.9647058823529412,
-        "val/f1": 0.8551724137931035,
-        "val/roc_auc": 0.9836502072735948
-      },
-      {
-        "epoch": 18.0,
-        "train/accuracy": 0.976750700280112,
-        "train/f1": 0.907469342251951,
-        "train/loss": 0.09779417791328177,
-        "val/accuracy": 0.9705882352941176,
-        "val/f1": 0.8813559322033898,
-        "val/roc_auc": 0.9870607121443631
-      },
-      {
-        "epoch": 19.0,
-        "train/accuracy": 0.9753501400560224,
-        "train/f1": 0.8967136150234741,
-        "train/loss": 0.09540319648109565,
-        "val/accuracy": 0.9680672268907563,
-        "val/f1": 0.8623188405797102,
-        "val/roc_auc": 0.9860291794802365
-      },
-      {
-        "epoch": 20.0,
-        "train/accuracy": 0.9784313725490196,
-        "train/f1": 0.9124004550625711,
-        "train/loss": 0.09045989735871136,
-        "val/accuracy": 0.9663865546218487,
-        "val/f1": 0.8620689655172413,
-        "val/roc_auc": 0.9866738873953156
-      },
-      {
-        "epoch": 21.0,
-        "train/accuracy": 0.9787114845938375,
-        "train/f1": 0.9120370370370371,
-        "train/loss": 0.08650485917466695,
-        "val/accuracy": 0.9680672268907563,
-        "val/f1": 0.8689655172413793,
-        "val/roc_auc": 0.9847848932041338
-      },
-      {
-        "epoch": 22.0,
-        "train/accuracy": 0.9795518207282913,
-        "train/f1": 0.9180695847362514,
-        "train/loss": 0.07978185020721092,
-        "val/accuracy": 0.9680672268907563,
-        "val/f1": 0.8707482993197279,
-        "val/roc_auc": 0.9859904970053317
-      },
-      {
-        "epoch": 23.0,
-        "train/accuracy": 0.9789915966386554,
-        "train/f1": 0.9156355455568054,
-        "train/loss": 0.08769953934764699,
-        "val/accuracy": 0.9697478991596639,
-        "val/f1": 0.8767123287671232,
-        "val/roc_auc": 0.9844431980091419
-      },
-      {
-        "epoch": 24.0,
-        "train/accuracy": 0.976750700280112,
-        "train/f1": 0.9042675893886967,
-        "train/loss": 0.08533215187176937,
-        "val/accuracy": 0.973109243697479,
-        "val/f1": 0.8904109589041096,
-        "val/roc_auc": 0.9871509712524741
-      },
-      {
-        "epoch": 25.0,
-        "train/accuracy": 0.9795518207282913,
-        "train/f1": 0.9169510807736063,
-        "train/loss": 0.08791167128632883,
-        "val/accuracy": 0.9714285714285714,
-        "val/f1": 0.8851351351351351,
-        "val/roc_auc": 0.9866674403161648
-      },
-      {
-        "epoch": 26.0,
-        "train/accuracy": 0.9809523809523809,
-        "train/f1": 0.9227272727272727,
-        "train/loss": 0.07707080840855754,
-        "val/accuracy": 0.9705882352941176,
-        "val/f1": 0.8813559322033898,
-        "val/roc_auc": 0.9887111644069655
-      },
-      {
-        "epoch": 27.0,
-        "train/accuracy": 0.980672268907563,
-        "train/f1": 0.9229050279329609,
-        "train/loss": 0.07683305373462308,
-        "val/accuracy": 0.9722689075630252,
-        "val/f1": 0.8903654485049833,
-        "val/roc_auc": 0.9885628815864973
-      },
-      {
-        "epoch": 28.0,
-        "train/accuracy": 0.9787114845938375,
-        "train/f1": 0.9170305676855895,
-        "train/loss": 0.07763002693068748,
-        "val/accuracy": 0.9663865546218487,
-        "val/f1": 0.869281045751634,
-        "val/roc_auc": 0.9863450863586254
-      },
-      {
-        "epoch": 29.0,
-        "train/accuracy": 0.9795518207282913,
-        "train/f1": 0.9187986651835373,
-        "train/loss": 0.07975714199182365,
-        "val/accuracy": 0.9705882352941176,
-        "val/f1": 0.8805460750853242,
-        "val/roc_auc": 0.987150971252474
-      },
-      {
-        "epoch": 30.0,
-        "train/accuracy": 0.9809523809523809,
-        "train/f1": 0.9227272727272727,
-        "train/loss": 0.07601532450817129,
-        "val/accuracy": 0.9739495798319328,
-        "val/f1": 0.89419795221843,
-        "val/roc_auc": 0.9885241991115925
-      }
-    ],
-    "loaded_scenarios": [],
-    "model": "gnn",
-    "model_label": "gnn:gat",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-19/17-16-56",
-    "paradigm": "supervised",
-    "plots": {
-      "f1_curve": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/report /figures/adfa_ld_gat_diagnostic_f1.pdf",
-      "loss_curve": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/report /figures/adfa_ld_gat_diagnostic_loss.pdf"
-    },
-    "scenario": "all",
-    "test": {
-      "accuracy": 0.9731318219983207,
-      "f1": 0.8888888888888888,
-      "precision": 0.920863309352518,
-      "recall": 0.8590604026845637,
-      "roc_auc": 0.9913820865913512,
-      "support": 1191
-    },
-    "test_samples": 1191,
-    "train_samples": 3570,
-    "val_samples": 1190,
-    "validation": {
-      "accuracy": 0.9739495798319328,
-      "f1": 0.89419795221843,
-      "precision": 0.9097222222222222,
-      "recall": 0.8791946308724832,
-      "roc_auc": 0.9885241991115925,
-      "support": 1190
-    }
-  },
   "adfa_ld_gcn": {
     "architecture": "gcn",
     "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
     "experiment_name": "adfa_ld_gcn",
     "history": [
       {
@@ -412,9 +97,7 @@
     "loaded_scenarios": [],
     "model": "gnn",
     "model_label": "gnn:gcn",
-    "node_feature_profile": "full",
     "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-18/16-23-58",
-    "paradigm": "supervised",
     "plots": {},
     "scenario": "all",
     "test": {
@@ -440,8 +123,6 @@
   "adfa_ld_gnn": {
     "architecture": "wgcn_plus",
     "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
     "experiment_name": "adfa_ld_gnn",
     "history": [
       {
@@ -475,9 +156,7 @@
     "loaded_scenarios": [],
     "model": "gnn",
     "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
     "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-18/15-45-44",
-    "paradigm": "supervised",
     "plots": {
       "f1_curve": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/report /figures/adfa_ld_gnn_f1.pdf",
       "loss_curve": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/report /figures/adfa_ld_gnn_loss.pdf"
@@ -506,8 +185,6 @@
   "adfa_ld_graphsage": {
     "architecture": "graphsage",
     "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
     "experiment_name": "adfa_ld_graphsage",
     "history": [
       {
@@ -541,9 +218,7 @@
     "loaded_scenarios": [],
     "model": "gnn",
     "model_label": "gnn:graphsage",
-    "node_feature_profile": "full",
     "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-18/16-23-58",
-    "paradigm": "supervised",
     "plots": {},
     "scenario": "all",
     "test": {
@@ -569,16 +244,12 @@
   "adfa_ld_pagerank": {
     "architecture": null,
     "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
     "experiment_name": "adfa_ld_pagerank",
     "history": [],
     "loaded_scenarios": [],
     "model": "pagerank",
     "model_label": "pagerank",
-    "node_feature_profile": "full",
     "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/pagerank/2026-04-18/16-29-32",
-    "paradigm": "anomaly",
     "plots": {
       "pagerank_scores": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/report /figures/adfa_ld_pagerank_scores.pdf"
     },
@@ -603,681 +274,102 @@
       "support": 1190
     }
   },
-  "adfa_ld_paradigm_anomaly": {
-    "architecture": "wgcn_plus",
-    "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "adfa_ld_paradigm_anomaly",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/loss": 7.432806990988204,
-        "val/accuracy": 0.8411764705882353,
-        "val/f1": 0.5166240409207161,
-        "val/roc_auc": 0.8451153704814034
-      },
-      {
-        "epoch": 2.0,
-        "train/loss": 5.314527095089655,
-        "val/accuracy": 0.8420168067226891,
-        "val/f1": 0.5252525252525253,
-        "val/roc_auc": 0.8568490545358425
-      },
-      {
-        "epoch": 3.0,
-        "train/loss": 4.75119918115165,
-        "val/accuracy": 0.8478991596638655,
-        "val/f1": 0.5274151436031331,
-        "val/roc_auc": 0.858190046999207
-      },
-      {
-        "epoch": 4.0,
-        "train/loss": 4.337131656797019,
-        "val/accuracy": 0.8445378151260504,
-        "val/f1": 0.5363408521303258,
-        "val/roc_auc": 0.8598856288158649
-      },
-      {
-        "epoch": 5.0,
-        "train/loss": 3.9114021359919584,
-        "val/accuracy": 0.8705882352941177,
-        "val/f1": 0.5389221556886228,
-        "val/roc_auc": 0.8609816322714993
-      },
-      {
-        "epoch": 6.0,
-        "train/loss": 3.415363535370909,
-        "val/accuracy": 0.8705882352941177,
-        "val/f1": 0.5416666666666666,
-        "val/roc_auc": 0.8618777762734593
-      },
-      {
-        "epoch": 7.0,
-        "train/loss": 3.095759562847326,
-        "val/accuracy": 0.8596638655462185,
-        "val/f1": 0.5474254742547425,
-        "val/roc_auc": 0.8631220625495619
-      },
-      {
-        "epoch": 8.0,
-        "train/loss": 2.8087001836582455,
-        "val/accuracy": 0.8613445378151261,
-        "val/f1": 0.5528455284552846,
-        "val/roc_auc": 0.8629802268082445
-      },
-      {
-        "epoch": 9.0,
-        "train/loss": 2.600191118471291,
-        "val/accuracy": 0.8571428571428571,
-        "val/f1": 0.5454545454545454,
-        "val/roc_auc": 0.8666679560824968
-      },
-      {
-        "epoch": 10.0,
-        "train/loss": 2.4592533256670057,
-        "val/accuracy": 0.8554621848739495,
-        "val/f1": 0.5351351351351351,
-        "val/roc_auc": 0.8629415443333398
-      }
-    ],
-    "loaded_scenarios": [],
-    "model": "gnn",
-    "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-19/17-16-52",
-    "paradigm": "anomaly",
-    "plots": {},
-    "scenario": "all",
-    "test": {
-      "accuracy": 0.8446683459277917,
-      "f1": 0.48753462603878117,
-      "precision": 0.41509433962264153,
-      "recall": 0.5906040268456376,
-      "roc_auc": 0.8496760231356838,
-      "support": 1191
-    },
-    "test_samples": 1191,
-    "train_samples": 3570,
-    "val_samples": 1190,
-    "validation": {
-      "accuracy": 0.8613445378151261,
-      "f1": 0.5528455284552846,
-      "precision": 0.4636363636363636,
-      "recall": 0.6845637583892618,
-      "roc_auc": 0.8629802268082445,
-      "support": 1190
-    }
-  },
-  "adfa_ld_paradigm_contrastive": {
-    "architecture": "wgcn_plus",
-    "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "adfa_ld_paradigm_contrastive",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.8848739495798319,
-        "train/f1": 0.19569471624266144,
-        "train/loss": 0.3031706630515785,
-        "val/accuracy": 0.8848739495798319,
-        "val/f1": 0.15950920245398773,
-        "val/roc_auc": 0.8965952975004674
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.8971988795518208,
-        "train/f1": 0.4032520325203252,
-        "train/loss": 0.2595233430214623,
-        "val/accuracy": 0.8974789915966387,
-        "val/f1": 0.41346153846153844,
-        "val/roc_auc": 0.9304875925961742
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.9098039215686274,
-        "train/f1": 0.5763157894736842,
-        "train/loss": 0.23554916516238567,
-        "val/accuracy": 0.9193277310924369,
-        "val/f1": 0.6521739130434783,
-        "val/roc_auc": 0.9409769903745109
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.9162464985994397,
-        "train/f1": 0.6294919454770755,
-        "train/loss": 0.21946201681756838,
-        "val/accuracy": 0.915126050420168,
-        "val/f1": 0.6552901023890785,
-        "val/roc_auc": 0.9529492163575293
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.9193277310924369,
-        "train/f1": 0.627906976744186,
-        "train/loss": 0.20569647075999684,
-        "val/accuracy": 0.9235294117647059,
-        "val/f1": 0.6666666666666666,
-        "val/roc_auc": 0.9559600023209485
-      },
-      {
-        "epoch": 6.0,
-        "train/accuracy": 0.927170868347339,
-        "train/f1": 0.6692111959287532,
-        "train/loss": 0.19939889284242102,
-        "val/accuracy": 0.9277310924369748,
-        "val/f1": 0.6906474820143885,
-        "val/roc_auc": 0.9612014776705413
-      },
-      {
-        "epoch": 7.0,
-        "train/accuracy": 0.9246498599439776,
-        "train/f1": 0.6946651532349603,
-        "train/loss": 0.1884241953993044,
-        "val/accuracy": 0.9252100840336135,
-        "val/f1": 0.7192429022082019,
-        "val/roc_auc": 0.9608339941589463
-      },
-      {
-        "epoch": 8.0,
-        "train/accuracy": 0.9313725490196079,
-        "train/f1": 0.7114252061248527,
-        "train/loss": 0.1872467395972137,
-        "val/accuracy": 0.9302521008403362,
-        "val/f1": 0.7205387205387206,
-        "val/roc_auc": 0.962690752954374
-      },
-      {
-        "epoch": 9.0,
-        "train/accuracy": 0.9336134453781513,
-        "train/f1": 0.7011349306431274,
-        "train/loss": 0.1802900902029513,
-        "val/accuracy": 0.9378151260504202,
-        "val/f1": 0.7299270072992701,
-        "val/roc_auc": 0.9688799489391331
-      },
-      {
-        "epoch": 10.0,
-        "train/accuracy": 0.9361344537815126,
-        "train/f1": 0.731764705882353,
-        "train/loss": 0.17569905629678934,
-        "val/accuracy": 0.938655462184874,
-        "val/f1": 0.7508532423208191,
-        "val/roc_auc": 0.9709107788716321
-      }
-    ],
-    "loaded_scenarios": [],
-    "model": "gnn",
-    "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-19/17-16-52",
-    "paradigm": "contrastive",
-    "plots": {},
-    "scenario": "all",
-    "test": {
-      "accuracy": 0.929471032745592,
-      "f1": 0.6956521739130435,
-      "precision": 0.7559055118110236,
-      "recall": 0.6442953020134228,
-      "roc_auc": 0.9572131548776874,
-      "support": 1191
-    },
-    "test_samples": 1191,
-    "train_samples": 3570,
-    "val_samples": 1190,
-    "validation": {
-      "accuracy": 0.938655462184874,
-      "f1": 0.7508532423208191,
-      "precision": 0.7638888888888888,
-      "recall": 0.738255033557047,
-      "roc_auc": 0.9709107788716321,
-      "support": 1190
-    }
-  },
-  "adfa_ld_paradigm_supervised": {
-    "architecture": "wgcn_plus",
-    "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "adfa_ld_paradigm_supervised",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.8932773109243698,
-        "train/f1": 0.5336597307221542,
-        "train/loss": 0.3249579209156063,
-        "val/accuracy": 0.9,
-        "val/f1": 0.5938566552901023,
-        "val/roc_auc": 0.9052408306416777
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.9187675070028011,
-        "train/f1": 0.692144373673036,
-        "train/loss": 0.24692564908863784,
-        "val/accuracy": 0.9218487394957983,
-        "val/f1": 0.7120743034055728,
-        "val/roc_auc": 0.9532006524444101
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.9378151260504202,
-        "train/f1": 0.7672955974842768,
-        "train/loss": 0.20410263070873186,
-        "val/accuracy": 0.9369747899159664,
-        "val/f1": 0.7734138972809668,
-        "val/roc_auc": 0.9646667827140913
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.9501400560224089,
-        "train/f1": 0.7972665148063781,
-        "train/loss": 0.17942688815733965,
-        "val/accuracy": 0.9512605042016806,
-        "val/f1": 0.8066666666666666,
-        "val/roc_auc": 0.9743535191381545
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.9464985994397759,
-        "train/f1": 0.7483530961791831,
-        "train/loss": 0.1550905112625838,
-        "val/accuracy": 0.9445378151260504,
-        "val/f1": 0.7338709677419355,
-        "val/roc_auc": 0.9783764965282479
-      },
-      {
-        "epoch": 6.0,
-        "train/accuracy": 0.9607843137254902,
-        "train/f1": 0.8405466970387244,
-        "train/loss": 0.14298151732743286,
-        "val/accuracy": 0.9638655462184874,
-        "val/f1": 0.8532423208191127,
-        "val/roc_auc": 0.97994313676189
-      },
-      {
-        "epoch": 7.0,
-        "train/accuracy": 0.9613445378151261,
-        "train/f1": 0.8341346153846154,
-        "train/loss": 0.1346623785272032,
-        "val/accuracy": 0.9630252100840336,
-        "val/f1": 0.8405797101449275,
-        "val/roc_auc": 0.9824832859473016
-      },
-      {
-        "epoch": 8.0,
-        "train/accuracy": 0.9638655462184874,
-        "train/f1": 0.8505214368482039,
-        "train/loss": 0.12040917279840517,
-        "val/accuracy": 0.9663865546218487,
-        "val/f1": 0.8581560283687943,
-        "val/roc_auc": 0.9825413096596587
-      },
-      {
-        "epoch": 9.0,
-        "train/accuracy": 0.9697478991596639,
-        "train/f1": 0.8761467889908257,
-        "train/loss": 0.11843971181817416,
-        "val/accuracy": 0.965546218487395,
-        "val/f1": 0.856140350877193,
-        "val/roc_auc": 0.984133738209904
-      },
-      {
-        "epoch": 10.0,
-        "train/accuracy": 0.9663865546218487,
-        "train/f1": 0.8698481561822126,
-        "train/loss": 0.11560929257328771,
-        "val/accuracy": 0.9647058823529412,
-        "val/f1": 0.8636363636363636,
-        "val/roc_auc": 0.9840628203392453
-      }
-    ],
-    "loaded_scenarios": [],
-    "model": "gnn",
-    "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-19/17-16-52",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "all",
-    "test": {
-      "accuracy": 0.9580184718723762,
-      "f1": 0.8322147651006712,
-      "precision": 0.8322147651006712,
-      "recall": 0.8322147651006712,
-      "roc_auc": 0.9851279805227429,
-      "support": 1191
-    },
-    "test_samples": 1191,
-    "train_samples": 3570,
-    "val_samples": 1190,
-    "validation": {
-      "accuracy": 0.9647058823529412,
-      "f1": 0.8636363636363636,
-      "precision": 0.8364779874213837,
-      "recall": 0.8926174496644296,
-      "roc_auc": 0.9840628203392453,
-      "support": 1190
-    }
-  },
-  "adfa_ld_sequence_gru": {
-    "architecture": null,
-    "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "adfa_ld_sequence_gru",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.9033613445378151,
-        "train/f1": 0.5050215208034433,
-        "train/loss": 0.27024979934680693,
-        "val/accuracy": 0.9008403361344538,
-        "val/f1": 0.48695652173913045,
-        "val/roc_auc": 0.9448130024692314
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.9366946778711485,
-        "train/f1": 0.7477678571428571,
-        "train/loss": 0.19009694219553838,
-        "val/accuracy": 0.9210084033613445,
-        "val/f1": 0.6866666666666666,
-        "val/roc_auc": 0.9543998091664572
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.942296918767507,
-        "train/f1": 0.7524038461538461,
-        "train/loss": 0.16407055293395073,
-        "val/accuracy": 0.9243697478991597,
-        "val/f1": 0.6762589928057554,
-        "val/roc_auc": 0.9588031642264472
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.9532212885154062,
-        "train/f1": 0.819848975188781,
-        "train/loss": 0.13891004908214263,
-        "val/accuracy": 0.934453781512605,
-        "val/f1": 0.7531645569620253,
-        "val/roc_auc": 0.962136304147406
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.9560224089635855,
-        "train/f1": 0.8059332509270705,
-        "train/loss": 0.11811441962035889,
-        "val/accuracy": 0.9369747899159664,
-        "val/f1": 0.7252747252747253,
-        "val/roc_auc": 0.9630969189408739
-      },
-      {
-        "epoch": 6.0,
-        "train/accuracy": 0.9621848739495799,
-        "train/f1": 0.8484848484848485,
-        "train/loss": 0.10562254414171064,
-        "val/accuracy": 0.9394957983193277,
-        "val/f1": 0.76,
-        "val/roc_auc": 0.9652760316938411
-      },
-      {
-        "epoch": 7.0,
-        "train/accuracy": 0.9745098039215686,
-        "train/f1": 0.8955223880597015,
-        "train/loss": 0.10035801962310192,
-        "val/accuracy": 0.946218487394958,
-        "val/f1": 0.7777777777777778,
-        "val/roc_auc": 0.9660819165876899
-      },
-      {
-        "epoch": 8.0,
-        "train/accuracy": 0.9697478991596639,
-        "train/f1": 0.8705035971223022,
-        "train/loss": 0.08032578175955293,
-        "val/accuracy": 0.9436974789915966,
-        "val/f1": 0.7490636704119851,
-        "val/roc_auc": 0.966481635495039
-      },
-      {
-        "epoch": 9.0,
-        "train/accuracy": 0.9809523809523809,
-        "train/f1": 0.9216589861751152,
-        "train/loss": 0.07123240086586535,
-        "val/accuracy": 0.9504201680672268,
-        "val/f1": 0.7900355871886121,
-        "val/roc_auc": 0.9694537389835535
-      },
-      {
-        "epoch": 10.0,
-        "train/accuracy": 0.9823529411764705,
-        "train/f1": 0.929608938547486,
-        "train/loss": 0.06030107297483279,
-        "val/accuracy": 0.9495798319327731,
-        "val/f1": 0.8013245033112583,
-        "val/roc_auc": 0.968544700823292
-      }
-    ],
-    "loaded_scenarios": [],
-    "model": "sequence_gru",
-    "model_label": "sequence_gru",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/sequence_gru/2026-04-19/17-36-08",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "all",
-    "source_scenario": null,
-    "target_scenario": null,
-    "test": {
-      "accuracy": 0.9445843828715366,
-      "f1": 0.7708333333333334,
-      "precision": 0.7985611510791367,
-      "recall": 0.7449664429530202,
-      "roc_auc": 0.9789898105089594,
-      "support": 1191
-    },
-    "test_samples": 1191,
-    "train_samples": 3570,
-    "val_samples": 1190,
-    "validation": {
-      "accuracy": 0.9495798319327731,
-      "f1": 0.8013245033112583,
-      "precision": 0.7908496732026143,
-      "recall": 0.8120805369127517,
-      "roc_auc": 0.968544700823292,
-      "support": 1190
-    }
-  },
-  "adfa_ld_sequence_logreg": {
-    "architecture": null,
-    "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "adfa_ld_sequence_logreg",
-    "history": [],
-    "loaded_scenarios": [],
-    "model": "sequence_logreg",
-    "model_label": "sequence_logreg",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/sequence_logreg/2026-04-19/17-36-08",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "all",
-    "source_scenario": null,
-    "target_scenario": null,
-    "test": {
-      "accuracy": 0.9269521410579346,
-      "f1": 0.7692307692307693,
-      "precision": 0.6359649122807017,
-      "recall": 0.9731543624161074,
-      "roc_auc": 0.9783457213154877,
-      "support": 1191
-    },
-    "test_samples": 1191,
-    "train_samples": 3570,
-    "val_samples": 1190,
-    "validation": {
-      "accuracy": 0.9050420168067227,
-      "f1": 0.7153652392947103,
-      "precision": 0.5725806451612904,
-      "recall": 0.9530201342281879,
-      "roc_auc": 0.971845605348497,
-      "support": 1190
-    }
-  },
   "adfa_ld_wgcn_plus": {
     "architecture": "wgcn_plus",
     "dataset": "adfa_ld",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
     "experiment_name": "adfa_ld_wgcn_plus",
     "history": [
       {
         "epoch": 1.0,
-        "train/accuracy": 0.8932773109243698,
-        "train/f1": 0.5336597307221542,
-        "train/loss": 0.3249579209156063,
-        "val/accuracy": 0.9,
-        "val/f1": 0.5938566552901023,
-        "val/roc_auc": 0.9052408306416777
+        "train/accuracy": 0.8854341736694678,
+        "train/f1": 0.5304247990815155,
+        "train/loss": 0.32235010439942197,
+        "val/accuracy": 0.8957983193277311,
+        "val/f1": 0.6,
+        "val/roc_auc": 0.9059500093482648
       },
       {
         "epoch": 2.0,
-        "train/accuracy": 0.9187675070028011,
-        "train/f1": 0.692144373673036,
-        "train/loss": 0.24692564908863784,
-        "val/accuracy": 0.9218487394957983,
-        "val/f1": 0.7120743034055728,
-        "val/roc_auc": 0.9532006524444101
+        "train/accuracy": 0.926890756302521,
+        "train/f1": 0.6874251497005988,
+        "train/loss": 0.24400449320047843,
+        "val/accuracy": 0.926890756302521,
+        "val/f1": 0.6903914590747331,
+        "val/roc_auc": 0.951659800527371
       },
       {
         "epoch": 3.0,
-        "train/accuracy": 0.9378151260504202,
-        "train/f1": 0.7672955974842768,
-        "train/loss": 0.20410263070873186,
-        "val/accuracy": 0.9369747899159664,
-        "val/f1": 0.7734138972809668,
-        "val/roc_auc": 0.9646667827140913
+        "train/accuracy": 0.9291316526610645,
+        "train/f1": 0.7482587064676617,
+        "train/loss": 0.199644127730228,
+        "val/accuracy": 0.9302521008403362,
+        "val/f1": 0.7594202898550725,
+        "val/roc_auc": 0.9632323076030405
       }
     ],
     "loaded_scenarios": [],
     "model": "gnn",
     "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-18/19-06-09",
-    "paradigm": "supervised",
+    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/adfa_ld/gnn/2026-04-18/16-23-58",
     "plots": {},
     "scenario": "all",
     "test": {
-      "accuracy": 0.9420654911838791,
-      "f1": 0.7823343848580442,
-      "precision": 0.7380952380952381,
-      "recall": 0.8322147651006712,
-      "roc_auc": 0.970629532777699,
+      "accuracy": 0.924433249370277,
+      "f1": 0.7289156626506024,
+      "precision": 0.6612021857923497,
+      "recall": 0.8120805369127517,
+      "roc_auc": 0.9636218423527291,
       "support": 1191
     },
     "test_samples": 1191,
     "train_samples": 3570,
     "val_samples": 1190,
     "validation": {
-      "accuracy": 0.9369747899159664,
-      "f1": 0.7734138972809668,
-      "precision": 0.7032967032967034,
-      "recall": 0.8590604026845637,
-      "roc_auc": 0.9646667827140913,
+      "accuracy": 0.9302521008403362,
+      "f1": 0.7594202898550725,
+      "precision": 0.6683673469387755,
+      "recall": 0.8791946308724832,
+      "roc_auc": 0.9632323076030405,
       "support": 1190
     }
   },
-  "lid_bruteforce_feat_embedding_only_binary": {
-    "architecture": "wgcn_plus",
+  "lid_bruteforce_pagerank": {
+    "architecture": null,
     "dataset": "lid_ds",
-    "edge_weight_mode": "binary",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "lid_bruteforce_feat_embedding_only_binary",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.8471454880294659,
-        "train/f1": 0.0,
-        "train/loss": 0.4564598377238321,
-        "val/accuracy": 0.8461538461538461,
-        "val/f1": 0.0,
-        "val/roc_auc": 0.9410946196660482
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.8471454880294659,
-        "train/f1": 0.0,
-        "train/loss": 0.3509843818171029,
-        "val/accuracy": 0.8461538461538461,
-        "val/f1": 0.0,
-        "val/roc_auc": 0.9332096474953617
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.9226519337016574,
-        "train/f1": 0.6818181818181818,
-        "train/loss": 0.28740509427932964,
-        "val/accuracy": 0.9395604395604396,
-        "val/f1": 0.7555555555555555,
-        "val/roc_auc": 0.9366883116883116
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.9300184162062615,
-        "train/f1": 0.7397260273972602,
-        "train/loss": 0.22817058529203987,
-        "val/accuracy": 0.967032967032967,
-        "val/f1": 0.88,
-        "val/roc_auc": 0.9028293135435992
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.9281767955801105,
-        "train/f1": 0.7346938775510204,
-        "train/loss": 0.22228549909306275,
-        "val/accuracy": 0.967032967032967,
-        "val/f1": 0.88,
-        "val/roc_auc": 0.9288033395176253
-      }
-    ],
+    "experiment_name": "lid_bruteforce_pagerank",
+    "history": [],
     "loaded_scenarios": [
       "Bruteforce_CWE-307"
     ],
-    "model": "gnn",
-    "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "embedding_only",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/gnn/2026-04-19/17-15-07",
-    "paradigm": "supervised",
+    "model": "pagerank",
+    "model_label": "pagerank",
+    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/pagerank/2026-04-18/16-24-48",
     "plots": {},
     "scenario": "Bruteforce_CWE-307",
     "test": {
-      "accuracy": 0.9395604395604396,
-      "f1": 0.7843137254901961,
-      "precision": 0.8695652173913043,
-      "recall": 0.7142857142857143,
-      "roc_auc": 0.9489795918367346,
+      "accuracy": 0.989010989010989,
+      "f1": 0.9629629629629629,
+      "precision": 1.0,
+      "recall": 0.9285714285714286,
+      "roc_auc": 1.0,
       "support": 182
     },
     "test_samples": 182,
     "train_samples": 543,
     "val_samples": 182,
     "validation": {
-      "accuracy": 0.967032967032967,
-      "f1": 0.88,
+      "accuracy": 0.9945054945054945,
+      "f1": 0.9818181818181818,
       "precision": 1.0,
-      "recall": 0.7857142857142857,
-      "roc_auc": 0.9028293135435992,
+      "recall": 0.9642857142857143,
+      "roc_auc": 1.0,
       "support": 182
     }
   },
-  "lid_bruteforce_feat_full_binary": {
+  "lid_bruteforce_wgcn_plus": {
     "architecture": "wgcn_plus",
     "dataset": "lid_ds",
-    "edge_weight_mode": "binary",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "lid_bruteforce_feat_full_binary",
+    "experiment_name": "lid_bruteforce_wgcn_plus",
     "history": [
       {
         "epoch": 1.0,
@@ -1305,24 +397,6 @@
         "val/accuracy": 0.9725274725274725,
         "val/f1": 0.9056603773584906,
         "val/roc_auc": 0.9909554730983302
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.9760589318600368,
-        "train/f1": 0.9221556886227545,
-        "train/loss": 0.13259247789231454,
-        "val/accuracy": 0.9725274725274725,
-        "val/f1": 0.9056603773584906,
-        "val/roc_auc": 0.9928107606679035
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.9815837937384899,
-        "train/f1": 0.9397590361445783,
-        "train/loss": 0.0996080673613601,
-        "val/accuracy": 0.9835164835164835,
-        "val/f1": 0.9433962264150944,
-        "val/roc_auc": 0.9951298701298701
       }
     ],
     "loaded_scenarios": [
@@ -1330,428 +404,32 @@
     ],
     "model": "gnn",
     "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/gnn/2026-04-19/17-15-07",
-    "paradigm": "supervised",
+    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/gnn/2026-04-18/16-24-48",
     "plots": {},
     "scenario": "Bruteforce_CWE-307",
     "test": {
-      "accuracy": 0.9615384615384616,
-      "f1": 0.8679245283018868,
-      "precision": 0.92,
-      "recall": 0.8214285714285714,
-      "roc_auc": 0.9675324675324675,
+      "accuracy": 0.9560439560439561,
+      "f1": 0.8461538461538461,
+      "precision": 0.9166666666666666,
+      "recall": 0.7857142857142857,
+      "roc_auc": 0.966604823747681,
       "support": 182
     },
     "test_samples": 182,
     "train_samples": 543,
     "val_samples": 182,
     "validation": {
-      "accuracy": 0.9835164835164835,
-      "f1": 0.9433962264150944,
-      "precision": 1.0,
-      "recall": 0.8928571428571429,
-      "roc_auc": 0.9951298701298701,
-      "support": 182
-    }
-  },
-  "lid_bruteforce_feat_full_weighted": {
-    "architecture": "wgcn_plus",
-    "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "lid_bruteforce_feat_full_weighted",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.8471454880294659,
-        "train/f1": 0.0,
-        "train/loss": 0.4624071181588849,
-        "val/accuracy": 0.8461538461538461,
-        "val/f1": 0.0,
-        "val/roc_auc": 0.9842300556586271
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.8729281767955801,
-        "train/f1": 0.28865979381443296,
-        "train/loss": 0.3510308772819477,
-        "val/accuracy": 0.8736263736263736,
-        "val/f1": 0.30303030303030304,
-        "val/roc_auc": 0.9955936920222634
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.990791896869245,
-        "train/f1": 0.9693251533742331,
-        "train/loss": 0.22268228617052566,
-        "val/accuracy": 0.978021978021978,
-        "val/f1": 0.9230769230769231,
-        "val/roc_auc": 0.9997680890538034
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.990791896869245,
-        "train/f1": 0.9696969696969697,
-        "train/loss": 0.11610522974646113,
-        "val/accuracy": 0.989010989010989,
-        "val/f1": 0.9629629629629629,
-        "val/roc_auc": 0.9997680890538034
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.988950276243094,
-        "train/f1": 0.9642857142857143,
-        "train/loss": 0.07305613540895077,
-        "val/accuracy": 0.9945054945054945,
-        "val/f1": 0.9818181818181818,
-        "val/roc_auc": 0.9997680890538034
-      }
-    ],
-    "loaded_scenarios": [
-      "Bruteforce_CWE-307"
-    ],
-    "model": "gnn",
-    "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/gnn/2026-04-19/17-15-07",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "Bruteforce_CWE-307",
-    "test": {
-      "accuracy": 0.978021978021978,
-      "f1": 0.9230769230769231,
-      "precision": 1.0,
-      "recall": 0.8571428571428571,
-      "roc_auc": 0.978200371057514,
-      "support": 182
-    },
-    "test_samples": 182,
-    "train_samples": 543,
-    "val_samples": 182,
-    "validation": {
-      "accuracy": 0.9945054945054945,
-      "f1": 0.9818181818181818,
-      "precision": 1.0,
-      "recall": 0.9642857142857143,
-      "roc_auc": 0.9997680890538034,
-      "support": 182
-    }
-  },
-  "lid_bruteforce_feat_structural_binary": {
-    "architecture": "wgcn_plus",
-    "dataset": "lid_ds",
-    "edge_weight_mode": "binary",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "lid_bruteforce_feat_structural_binary",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.8471454880294659,
-        "train/f1": 0.0,
-        "train/loss": 0.464817357381624,
-        "val/accuracy": 0.8461538461538461,
-        "val/f1": 0.0,
-        "val/roc_auc": 0.913961038961039
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.8674033149171271,
-        "train/f1": 0.23404255319148937,
-        "train/loss": 0.33466500631133933,
-        "val/accuracy": 0.8736263736263736,
-        "val/f1": 0.30303030303030304,
-        "val/roc_auc": 0.9387755102040816
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.9484346224677717,
-        "train/f1": 0.8133333333333334,
-        "train/loss": 0.21071863750726477,
-        "val/accuracy": 0.9395604395604396,
-        "val/f1": 0.7555555555555555,
-        "val/roc_auc": 0.9640538033395177
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.9594843462246777,
-        "train/f1": 0.8493150684931506,
-        "train/loss": 0.1564491892209479,
-        "val/accuracy": 0.945054945054945,
-        "val/f1": 0.782608695652174,
-        "val/roc_auc": 0.9371521335807051
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.9631675874769797,
-        "train/f1": 0.8648648648648649,
-        "train/loss": 0.1410110300856181,
-        "val/accuracy": 0.9395604395604396,
-        "val/f1": 0.7555555555555555,
-        "val/roc_auc": 0.9512987012987013
-      }
-    ],
-    "loaded_scenarios": [
-      "Bruteforce_CWE-307"
-    ],
-    "model": "gnn",
-    "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "structural",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/gnn/2026-04-19/17-15-07",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "Bruteforce_CWE-307",
-    "test": {
-      "accuracy": 0.9505494505494505,
-      "f1": 0.8085106382978723,
-      "precision": 1.0,
-      "recall": 0.6785714285714286,
-      "roc_auc": 0.8928571428571429,
-      "support": 182
-    },
-    "test_samples": 182,
-    "train_samples": 543,
-    "val_samples": 182,
-    "validation": {
-      "accuracy": 0.945054945054945,
-      "f1": 0.782608695652174,
-      "precision": 1.0,
-      "recall": 0.6428571428571429,
-      "roc_auc": 0.9371521335807051,
-      "support": 182
-    }
-  },
-  "lid_bruteforce_pagerank": {
-    "architecture": null,
-    "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "lid_bruteforce_pagerank",
-    "history": [],
-    "loaded_scenarios": [
-      "Bruteforce_CWE-307"
-    ],
-    "model": "pagerank",
-    "model_label": "pagerank",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/pagerank/2026-04-18/16-24-48",
-    "paradigm": "anomaly",
-    "plots": {},
-    "scenario": "Bruteforce_CWE-307",
-    "test": {
-      "accuracy": 0.989010989010989,
-      "f1": 0.9629629629629629,
-      "precision": 1.0,
-      "recall": 0.9285714285714286,
-      "roc_auc": 1.0,
-      "support": 182
-    },
-    "test_samples": 182,
-    "train_samples": 543,
-    "val_samples": 182,
-    "validation": {
-      "accuracy": 0.9945054945054945,
-      "f1": 0.9818181818181818,
-      "precision": 1.0,
-      "recall": 0.9642857142857143,
-      "roc_auc": 1.0,
-      "support": 182
-    }
-  },
-  "lid_bruteforce_sequence_gru": {
-    "architecture": null,
-    "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "lid_bruteforce_sequence_gru",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.8471454880294659,
-        "train/f1": 0.0,
-        "train/loss": 0.5004709581424298,
-        "val/accuracy": 0.8461538461538461,
-        "val/f1": 0.0,
-        "val/roc_auc": 0.49141929499072357
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.8471454880294659,
-        "train/f1": 0.0,
-        "train/loss": 0.42396884761462555,
-        "val/accuracy": 0.8461538461538461,
-        "val/f1": 0.0,
-        "val/roc_auc": 0.4640538033395176
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.858195211786372,
-        "train/f1": 0.1348314606741573,
-        "train/loss": 0.3979106602528258,
-        "val/accuracy": 0.8516483516483516,
-        "val/f1": 0.06896551724137931,
-        "val/roc_auc": 0.4816790352504637
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.8710865561694291,
-        "train/f1": 0.35185185185185186,
-        "train/loss": 0.3918692817565047,
-        "val/accuracy": 0.8406593406593407,
-        "val/f1": 0.17142857142857143,
-        "val/roc_auc": 0.49304267161410026
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.8747697974217311,
-        "train/f1": 0.3333333333333333,
-        "train/loss": 0.3792343719229514,
-        "val/accuracy": 0.8461538461538461,
-        "val/f1": 0.17647058823529413,
-        "val/roc_auc": 0.5285250463821892
-      }
-    ],
-    "loaded_scenarios": [
-      "Bruteforce_CWE-307"
-    ],
-    "model": "sequence_gru",
-    "model_label": "sequence_gru",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/sequence_gru/2026-04-19/17-36-08",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "Bruteforce_CWE-307",
-    "source_scenario": null,
-    "target_scenario": null,
-    "test": {
-      "accuracy": 0.8461538461538461,
-      "f1": 0.17647058823529413,
-      "precision": 0.5,
-      "recall": 0.10714285714285714,
-      "roc_auc": 0.5831400742115028,
-      "support": 182
-    },
-    "test_samples": 182,
-    "train_samples": 543,
-    "val_samples": 182,
-    "validation": {
-      "accuracy": 0.8461538461538461,
-      "f1": 0.17647058823529413,
-      "precision": 0.5,
-      "recall": 0.10714285714285714,
-      "roc_auc": 0.5285250463821892,
-      "support": 182
-    }
-  },
-  "lid_bruteforce_sequence_logreg": {
-    "architecture": null,
-    "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "lid_bruteforce_sequence_logreg",
-    "history": [],
-    "loaded_scenarios": [
-      "Bruteforce_CWE-307"
-    ],
-    "model": "sequence_logreg",
-    "model_label": "sequence_logreg",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/sequence_logreg/2026-04-19/17-36-08",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "Bruteforce_CWE-307",
-    "source_scenario": null,
-    "target_scenario": null,
-    "test": {
-      "accuracy": 0.989010989010989,
-      "f1": 0.9629629629629629,
-      "precision": 1.0,
-      "recall": 0.9285714285714286,
-      "roc_auc": 1.0,
-      "support": 182
-    },
-    "test_samples": 182,
-    "train_samples": 543,
-    "val_samples": 182,
-    "validation": {
-      "accuracy": 0.9835164835164835,
-      "f1": 0.9433962264150944,
-      "precision": 1.0,
-      "recall": 0.8928571428571429,
-      "roc_auc": 1.0,
-      "support": 182
-    }
-  },
-  "lid_bruteforce_wgcn_plus": {
-    "architecture": "wgcn_plus",
-    "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
-    "experiment_name": "lid_bruteforce_wgcn_plus",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.8471454880294659,
-        "train/f1": 0.0,
-        "train/loss": 0.4624071181588849,
-        "val/accuracy": 0.8461538461538461,
-        "val/f1": 0.0,
-        "val/roc_auc": 0.9842300556586271
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.8729281767955801,
-        "train/f1": 0.28865979381443296,
-        "train/loss": 0.3510308772819477,
-        "val/accuracy": 0.8736263736263736,
-        "val/f1": 0.30303030303030304,
-        "val/roc_auc": 0.9955936920222634
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.990791896869245,
-        "train/f1": 0.9693251533742331,
-        "train/loss": 0.22268228617052566,
-        "val/accuracy": 0.978021978021978,
-        "val/f1": 0.9230769230769231,
-        "val/roc_auc": 0.9997680890538034
-      }
-    ],
-    "loaded_scenarios": [
-      "Bruteforce_CWE-307"
-    ],
-    "model": "gnn",
-    "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/gnn/2026-04-18/19-06-09",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "Bruteforce_CWE-307",
-    "test": {
       "accuracy": 0.9725274725274725,
-      "f1": 0.9019607843137255,
-      "precision": 1.0,
-      "recall": 0.8214285714285714,
-      "roc_auc": 0.9763450834879407,
-      "support": 182
-    },
-    "test_samples": 182,
-    "train_samples": 543,
-    "val_samples": 182,
-    "validation": {
-      "accuracy": 0.978021978021978,
-      "f1": 0.9230769230769231,
-      "precision": 1.0,
+      "f1": 0.9056603773584906,
+      "precision": 0.96,
       "recall": 0.8571428571428571,
-      "roc_auc": 0.9997680890538034,
+      "roc_auc": 0.9909554730983302,
       "support": 182
     }
   },
   "lid_cve_pagerank": {
     "architecture": null,
     "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
     "experiment_name": "lid_cve_pagerank",
     "history": [],
     "loaded_scenarios": [
@@ -1759,9 +437,7 @@
     ],
     "model": "pagerank",
     "model_label": "pagerank",
-    "node_feature_profile": "full",
     "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/pagerank/2026-04-18/16-24-48",
-    "paradigm": "anomaly",
     "plots": {},
     "scenario": "CVE-2014-0160",
     "test": {
@@ -1787,36 +463,34 @@
   "lid_cve_wgcn_plus": {
     "architecture": "wgcn_plus",
     "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "in_distribution",
     "experiment_name": "lid_cve_wgcn_plus",
     "history": [
       {
         "epoch": 1.0,
         "train/accuracy": 0.8631178707224335,
         "train/f1": 0.0,
-        "train/loss": 0.44628162801039084,
+        "train/loss": 0.4555467283317798,
         "val/accuracy": 0.8636363636363636,
         "val/f1": 0.0,
-        "val/roc_auc": 0.9473684210526316
+        "val/roc_auc": 0.9591557017543859
       },
       {
         "epoch": 2.0,
         "train/accuracy": 0.8631178707224335,
         "train/f1": 0.0,
-        "train/loss": 0.36275402221389597,
+        "train/loss": 0.36480661218157284,
         "val/accuracy": 0.8636363636363636,
         "val/f1": 0.0,
-        "val/roc_auc": 0.9065241228070176
+        "val/roc_auc": 0.9131030701754386
       },
       {
         "epoch": 3.0,
         "train/accuracy": 0.8631178707224335,
         "train/f1": 0.0,
-        "train/loss": 0.3168231520532655,
+        "train/loss": 0.30868630139546704,
         "val/accuracy": 0.8636363636363636,
         "val/f1": 0.0,
-        "val/roc_auc": 0.8903508771929824
+        "val/roc_auc": 0.9015899122807017
       }
     ],
     "loaded_scenarios": [
@@ -1824,9 +498,7 @@
     ],
     "model": "gnn",
     "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/gnn/2026-04-18/19-06-09",
-    "paradigm": "supervised",
+    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/gnn/2026-04-18/16-24-48",
     "plots": {},
     "scenario": "CVE-2014-0160",
     "test": {
@@ -1834,7 +506,7 @@
       "f1": 0.0,
       "precision": 0.0,
       "recall": 0.0,
-      "roc_auc": 0.9040570175438597,
+      "roc_auc": 0.9380482456140351,
       "support": 176
     },
     "test_samples": 176,
@@ -1845,260 +517,313 @@
       "f1": 0.0,
       "precision": 0.0,
       "recall": 0.0,
-      "roc_auc": 0.9473684210526316,
+      "roc_auc": 0.9591557017543859,
       "support": 176
     }
   },
-  "lid_transfer_pagerank": {
-    "architecture": null,
+  "lid_ds_all_gnn_gcn": {
+    "architecture": "gcn",
     "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "cross_scenario",
-    "experiment_name": "lid_transfer_pagerank",
-    "history": [],
-    "loaded_scenarios": [
-      "Bruteforce_CWE-307",
-      "CVE-2014-0160"
-    ],
-    "model": "pagerank",
-    "model_label": "pagerank",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/pagerank/2026-04-19/17-36-24",
-    "paradigm": "anomaly",
-    "plots": {},
-    "scenario": "Bruteforce_CWE-307->CVE-2014-0160",
-    "source_scenario": "Bruteforce_CWE-307",
-    "target_scenario": "CVE-2014-0160",
-    "test": {
-      "accuracy": 0.8405466970387244,
-      "f1": 0.35185185185185186,
-      "precision": 0.3958333333333333,
-      "recall": 0.31666666666666665,
-      "roc_auc": 0.7045019788918206,
-      "support": 878
-    },
-    "test_samples": 878,
-    "train_samples": 725,
-    "val_samples": 182,
-    "validation": {
-      "accuracy": 0.989010989010989,
-      "f1": 0.9629629629629629,
-      "precision": 1.0,
-      "recall": 0.9285714285714286,
-      "roc_auc": 1.0,
-      "support": 182
-    }
-  },
-  "lid_transfer_sequence_gru": {
-    "architecture": null,
-    "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "cross_scenario",
-    "experiment_name": "lid_transfer_sequence_gru",
+    "experiment_name": "lid_ds_all_gnn_gcn",
     "history": [
       {
         "epoch": 1.0,
-        "train/accuracy": 0.8468965517241379,
+        "train/accuracy": 0.8552754435107376,
         "train/f1": 0.0,
-        "train/loss": 0.479592127183388,
-        "val/accuracy": 0.8461538461538461,
+        "train/loss": 0.49269369987546563,
+        "val/accuracy": 0.8547486033519553,
         "val/f1": 0.0,
-        "val/roc_auc": 0.5896335807050093
+        "val/roc_auc": 0.7818627450980392
       },
       {
         "epoch": 2.0,
-        "train/accuracy": 0.8579310344827586,
-        "train/f1": 0.13445378151260504,
-        "train/loss": 0.42641740609859596,
-        "val/accuracy": 0.8461538461538461,
+        "train/accuracy": 0.8552754435107376,
+        "train/f1": 0.0,
+        "train/loss": 0.3871253718014191,
+        "val/accuracy": 0.8547486033519553,
         "val/f1": 0.0,
-        "val/roc_auc": 0.5459183673469388
+        "val/roc_auc": 0.8868149824032177
       },
       {
         "epoch": 3.0,
-        "train/accuracy": 0.8662068965517241,
-        "train/f1": 0.23622047244094488,
-        "train/loss": 0.40646927973319746,
-        "val/accuracy": 0.8571428571428571,
-        "val/f1": 0.23529411764705882,
-        "val/roc_auc": 0.5706168831168832
+        "train/accuracy": 0.8552754435107376,
+        "train/f1": 0.0,
+        "train/loss": 0.3582888809350136,
+        "val/accuracy": 0.8547486033519553,
+        "val/f1": 0.0,
+        "val/roc_auc": 0.9532428355957768
       },
       {
         "epoch": 4.0,
-        "train/accuracy": 0.8689655172413793,
-        "train/f1": 0.25196850393700787,
-        "train/loss": 0.38546060751224387,
-        "val/accuracy": 0.8571428571428571,
-        "val/f1": 0.13333333333333333,
-        "val/roc_auc": 0.5883580705009277
+        "train/accuracy": 0.8646125116713352,
+        "train/f1": 0.12121212121212122,
+        "train/loss": 0.3007651222269742,
+        "val/accuracy": 0.8575418994413407,
+        "val/f1": 0.03773584905660377,
+        "val/roc_auc": 0.9749245852187028
       },
       {
         "epoch": 5.0,
-        "train/accuracy": 0.8675862068965517,
-        "train/f1": 0.23809523809523808,
-        "train/loss": 0.3825925594773786,
-        "val/accuracy": 0.8626373626373627,
-        "val/f1": 0.1935483870967742,
-        "val/roc_auc": 0.5926484230055657
+        "train/accuracy": 0.9355742296918768,
+        "train/f1": 0.7183673469387755,
+        "train/loss": 0.2328039655108857,
+        "val/accuracy": 0.9134078212290503,
+        "val/f1": 0.6172839506172839,
+        "val/roc_auc": 0.9673202614379085
+      },
+      {
+        "epoch": 6.0,
+        "train/accuracy": 0.9701213818860878,
+        "train/f1": 0.8987341772151899,
+        "train/loss": 0.18357227148573382,
+        "val/accuracy": 0.9692737430167597,
+        "val/f1": 0.9026548672566371,
+        "val/roc_auc": 0.9944067370537959
+      },
+      {
+        "epoch": 7.0,
+        "train/accuracy": 0.9757236227824463,
+        "train/f1": 0.9139072847682119,
+        "train/loss": 0.11864045490167277,
+        "val/accuracy": 0.9748603351955307,
+        "val/f1": 0.9090909090909091,
+        "val/roc_auc": 0.9970462543991956
+      },
+      {
+        "epoch": 8.0,
+        "train/accuracy": 0.9822595704948646,
+        "train/f1": 0.9381107491856677,
+        "train/loss": 0.09429772225331191,
+        "val/accuracy": 0.9776536312849162,
+        "val/f1": 0.9259259259259259,
+        "val/roc_auc": 0.9958521870286576
+      },
+      {
+        "epoch": 9.0,
+        "train/accuracy": 0.9869281045751634,
+        "train/f1": 0.9551282051282052,
+        "train/loss": 0.08299159896355661,
+        "val/accuracy": 0.9804469273743017,
+        "val/f1": 0.9357798165137615,
+        "val/roc_auc": 0.9989316239316239
+      },
+      {
+        "epoch": 10.0,
+        "train/accuracy": 0.9878618113912232,
+        "train/f1": 0.9581993569131833,
+        "train/loss": 0.07037409326108564,
+        "val/accuracy": 0.9888268156424581,
+        "val/f1": 0.9622641509433962,
+        "val/roc_auc": 0.9994972347913524
+      },
+      {
+        "epoch": 11.0,
+        "train/accuracy": 0.9906629318394025,
+        "train/f1": 0.9675324675324676,
+        "train/loss": 0.05539930207667008,
+        "val/accuracy": 0.9916201117318436,
+        "val/f1": 0.9714285714285714,
+        "val/roc_auc": 0.9996857717445953
+      },
+      {
+        "epoch": 12.0,
+        "train/accuracy": 0.9934640522875817,
+        "train/f1": 0.9771986970684039,
+        "train/loss": 0.04236925532258734,
+        "val/accuracy": 0.9916201117318436,
+        "val/f1": 0.9714285714285714,
+        "val/roc_auc": 0.9998743086978381
+      },
+      {
+        "epoch": 13.0,
+        "train/accuracy": 0.9934640522875817,
+        "train/f1": 0.9770491803278688,
+        "train/loss": 0.0535945037117247,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 14.0,
+        "train/accuracy": 0.992530345471522,
+        "train/f1": 0.9736842105263158,
+        "train/loss": 0.03812227293285502,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 15.0,
+        "train/accuracy": 0.9934640522875817,
+        "train/f1": 0.9773462783171522,
+        "train/loss": 0.04032826058855272,
+        "val/accuracy": 0.9972067039106145,
+        "val/f1": 0.9904761904761905,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 16.0,
+        "train/accuracy": 0.9943977591036415,
+        "train/f1": 0.9803921568627451,
+        "train/loss": 0.02737354808143513,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 17.0,
+        "train/accuracy": 0.996265172735761,
+        "train/f1": 0.987012987012987,
+        "train/loss": 0.024139087038492067,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 18.0,
+        "train/accuracy": 0.9934640522875817,
+        "train/f1": 0.977491961414791,
+        "train/loss": 0.026408188236332963,
+        "val/accuracy": 0.994413407821229,
+        "val/f1": 0.9807692307692307,
+        "val/roc_auc": 0.9998743086978381
+      },
+      {
+        "epoch": 19.0,
+        "train/accuracy": 0.996265172735761,
+        "train/f1": 0.987012987012987,
+        "train/loss": 0.03591557827114669,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 20.0,
+        "train/accuracy": 0.996265172735761,
+        "train/f1": 0.987012987012987,
+        "train/loss": 0.021825581967715873,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 21.0,
+        "train/accuracy": 0.992530345471522,
+        "train/f1": 0.9741935483870968,
+        "train/loss": 0.02052107567430007,
+        "val/accuracy": 0.9972067039106145,
+        "val/f1": 0.9904761904761905,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 22.0,
+        "train/accuracy": 0.9953314659197012,
+        "train/f1": 0.9837133550488599,
+        "train/loss": 0.02209581645078658,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 23.0,
+        "train/accuracy": 0.996265172735761,
+        "train/f1": 0.9869281045751634,
+        "train/loss": 0.015391948824856226,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 24.0,
+        "train/accuracy": 0.9943977591036415,
+        "train/f1": 0.9803921568627451,
+        "train/loss": 0.020481518285399448,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 25.0,
+        "train/accuracy": 0.996265172735761,
+        "train/f1": 0.987012987012987,
+        "train/loss": 0.0275258659371014,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 26.0,
+        "train/accuracy": 0.9981325863678805,
+        "train/f1": 0.9935064935064936,
+        "train/loss": 0.01455742456053708,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 27.0,
+        "train/accuracy": 0.9981325863678805,
+        "train/f1": 0.9935064935064936,
+        "train/loss": 0.010325843913534553,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 28.0,
+        "train/accuracy": 0.9990662931839402,
+        "train/f1": 0.9967845659163987,
+        "train/loss": 0.018676239143218757,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 29.0,
+        "train/accuracy": 0.9990662931839402,
+        "train/f1": 0.9967637540453075,
+        "train/loss": 0.011347301553040883,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
+      },
+      {
+        "epoch": 30.0,
+        "train/accuracy": 0.9981325863678805,
+        "train/f1": 0.9935483870967742,
+        "train/loss": 0.014948751978284004,
+        "val/accuracy": 1.0,
+        "val/f1": 1.0,
+        "val/roc_auc": 1.0
       }
     ],
     "loaded_scenarios": [
       "Bruteforce_CWE-307",
-      "CVE-2014-0160"
-    ],
-    "model": "sequence_gru",
-    "model_label": "sequence_gru",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/sequence_gru/2026-04-19/17-36-24",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "Bruteforce_CWE-307->CVE-2014-0160",
-    "source_scenario": "Bruteforce_CWE-307",
-    "target_scenario": "CVE-2014-0160",
-    "test": {
-      "accuracy": 0.8280182232346242,
-      "f1": 0.03821656050955414,
-      "precision": 0.08108108108108109,
-      "recall": 0.025,
-      "roc_auc": 0.5588445470536499,
-      "support": 878
-    },
-    "test_samples": 878,
-    "train_samples": 725,
-    "val_samples": 182,
-    "validation": {
-      "accuracy": 0.8571428571428571,
-      "f1": 0.23529411764705882,
-      "precision": 0.6666666666666666,
-      "recall": 0.14285714285714285,
-      "roc_auc": 0.5706168831168832,
-      "support": 182
-    }
-  },
-  "lid_transfer_sequence_logreg": {
-    "architecture": null,
-    "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "cross_scenario",
-    "experiment_name": "lid_transfer_sequence_logreg",
-    "history": [],
-    "loaded_scenarios": [
-      "Bruteforce_CWE-307",
-      "CVE-2014-0160"
-    ],
-    "model": "sequence_logreg",
-    "model_label": "sequence_logreg",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/sequence_logreg/2026-04-19/17-36-24",
-    "paradigm": "supervised",
-    "plots": {},
-    "scenario": "Bruteforce_CWE-307->CVE-2014-0160",
-    "source_scenario": "Bruteforce_CWE-307",
-    "target_scenario": "CVE-2014-0160",
-    "test": {
-      "accuracy": 0.8462414578587699,
-      "f1": 0.20118343195266272,
-      "precision": 0.3469387755102041,
-      "recall": 0.14166666666666666,
-      "roc_auc": 0.5783421284080915,
-      "support": 878
-    },
-    "test_samples": 878,
-    "train_samples": 725,
-    "val_samples": 182,
-    "validation": {
-      "accuracy": 0.989010989010989,
-      "f1": 0.9629629629629629,
-      "precision": 1.0,
-      "recall": 0.9285714285714286,
-      "roc_auc": 1.0,
-      "support": 182
-    }
-  },
-  "lid_transfer_wgcn_plus": {
-    "architecture": "wgcn_plus",
-    "dataset": "lid_ds",
-    "edge_weight_mode": "weighted",
-    "evaluation_protocol": "cross_scenario",
-    "experiment_name": "lid_transfer_wgcn_plus",
-    "history": [
-      {
-        "epoch": 1.0,
-        "train/accuracy": 0.8468965517241379,
-        "train/f1": 0.0,
-        "train/loss": 0.46046226871424706,
-        "val/accuracy": 0.8461538461538461,
-        "val/f1": 0.0,
-        "val/roc_auc": 0.9853896103896105
-      },
-      {
-        "epoch": 2.0,
-        "train/accuracy": 0.976551724137931,
-        "train/f1": 0.9170731707317074,
-        "train/loss": 0.31219331683783696,
-        "val/accuracy": 0.9560439560439561,
-        "val/f1": 0.8333333333333334,
-        "val/roc_auc": 0.9816790352504638
-      },
-      {
-        "epoch": 3.0,
-        "train/accuracy": 0.9862068965517241,
-        "train/f1": 0.9528301886792453,
-        "train/loss": 0.1499150143204064,
-        "val/accuracy": 0.9725274725274725,
-        "val/f1": 0.9019607843137255,
-        "val/roc_auc": 0.9707792207792209
-      },
-      {
-        "epoch": 4.0,
-        "train/accuracy": 0.9944827586206897,
-        "train/f1": 0.9818181818181818,
-        "train/loss": 0.07146101183932403,
-        "val/accuracy": 0.978021978021978,
-        "val/f1": 0.9230769230769231,
-        "val/roc_auc": 0.9691558441558442
-      },
-      {
-        "epoch": 5.0,
-        "train/accuracy": 0.9958620689655172,
-        "train/f1": 0.9863013698630136,
-        "train/loss": 0.05372765387183633,
-        "val/accuracy": 0.9725274725274725,
-        "val/f1": 0.9019607843137255,
-        "val/roc_auc": 0.9737940630797773
-      }
-    ],
-    "loaded_scenarios": [
-      "Bruteforce_CWE-307",
-      "CVE-2014-0160"
+      "CWE-89-SQL-injection"
     ],
     "model": "gnn",
-    "model_label": "gnn:wgcn_plus",
-    "node_feature_profile": "full",
-    "output_dir": "/Users/tristan/Documents/dev/01_Cours_CS/08_MLNS/intrusion-detection/outputs/lid_ds/gnn/2026-04-19/17-36-24",
-    "paradigm": "supervised",
+    "model_label": "gnn:gcn",
+    "output_dir": "/Users/sleider/ml/intrusion-detection/outputs/lid_ds/gnn/2026-04-19/17-25-14",
     "plots": {},
-    "scenario": "Bruteforce_CWE-307->CVE-2014-0160",
-    "source_scenario": "Bruteforce_CWE-307",
-    "target_scenario": "CVE-2014-0160",
+    "scenario": "all",
     "test": {
-      "accuracy": 0.8895216400911162,
-      "f1": 0.32167832167832167,
+      "accuracy": 0.9972067039106145,
+      "f1": 0.9902912621359223,
       "precision": 1.0,
-      "recall": 0.19166666666666668,
-      "roc_auc": 0.7057717678100264,
-      "support": 878
+      "recall": 0.9807692307692307,
+      "roc_auc": 0.9995600804424334,
+      "support": 358
     },
-    "test_samples": 878,
-    "train_samples": 725,
-    "val_samples": 182,
+    "test_samples": 358,
+    "train_samples": 1071,
+    "val_samples": 358,
     "validation": {
-      "accuracy": 0.978021978021978,
-      "f1": 0.9230769230769231,
+      "accuracy": 1.0,
+      "f1": 1.0,
       "precision": 1.0,
-      "recall": 0.8571428571428571,
-      "roc_auc": 0.9691558441558442,
-      "support": 182
+      "recall": 1.0,
+      "roc_auc": 1.0,
+      "support": 358
     }
   }
 }

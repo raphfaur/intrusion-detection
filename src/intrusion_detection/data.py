@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from io import TextIOWrapper
 import json
+import os
 from pathlib import Path
 import re
-from typing import Any
+from typing import Any, Iterable
 from zipfile import ZipFile
 
 import networkx as nx
@@ -165,16 +167,6 @@ class ADFALDLoader:
 
 
 class LIDDSLoader:
-    sc_line_re = re.compile(
-        r"^(?P<timestamp>\d+)\s+"
-        r"(?P<field2>\S+)\s+"
-        r"(?P<field3>\S+)\s+"
-        r"(?P<procname>\S+)\s+"
-        r"(?P<field5>\S+)\s+"
-        r"(?P<syscall>\S+)\s+"
-        r"(?P<direction>[<>])\s*"
-        r"(?P<rest>.*)$"
-    )
     res_re = re.compile(r"\bres=(-?\d+)\b")
 
     def __init__(
@@ -183,11 +175,13 @@ class LIDDSLoader:
         scenario: str = "all",
         direction_filter: str | None = ">",
         keep_only_successful_parsed_lines: bool = True,
+        loader_workers: int | str | None = 1,
     ) -> None:
         self.root = Path(root_dir)
         self.scenario = scenario
         self.direction_filter = direction_filter
         self.keep_only_successful_parsed_lines = keep_only_successful_parsed_lines
+        self.loader_workers = loader_workers
 
     @staticmethod
     def _normalize_syscall_value(value: Any) -> SyscallToken | None:
@@ -268,25 +262,32 @@ class LIDDSLoader:
         if not line:
             return None
 
-        match = self.sc_line_re.match(line)
-        if not match:
+        parts = line.split(maxsplit=7)
+        if len(parts) < 7:
             return None
 
-        data = match.groupdict()
-        rest = data["rest"]
+        timestamp_text, _, _, procname, _, syscall_text, direction, *rest_parts = parts
+        if direction not in {"<", ">"}:
+            return None
+
+        try:
+            timestamp = int(timestamp_text)
+        except ValueError:
+            return None
+
+        rest = rest_parts[0] if rest_parts else ""
         res_match = self.res_re.search(rest)
         res_value = int(res_match.group(1)) if res_match else np.nan
-        syscall = self._normalize_syscall_value(data["syscall"])
+        syscall = self._normalize_syscall_value(syscall_text)
         if syscall is None:
             return None
 
         return {
-            "timestamp": int(data["timestamp"]),
-            "procname": data["procname"],
+            "timestamp": timestamp,
+            "procname": procname,
             "syscall": syscall,
-            "direction": data["direction"],
+            "direction": direction,
             "res": res_value,
-            "raw_rest": rest,
         }
 
     def _load_sample_from_zip(self, zip_path: Path) -> tuple[dict[str, Any], pd.DataFrame, int]:
@@ -304,32 +305,85 @@ class LIDDSLoader:
                 meta = json.loads(handle.read().decode("utf-8", errors="ignore"))
 
             with archive.open(sc_files[0]) as handle:
-                lines = TextIOWrapper(handle, encoding="utf-8", errors="ignore").read().splitlines()
+                events_df = self._parse_sc_handle(
+                    TextIOWrapper(handle, encoding="utf-8", errors="ignore"),
+                    source_label=str(zip_path),
+                )
+        label = int(bool(meta.get("exploit", False)))
+        return meta, events_df, label
 
-        events = [self._parse_sc_line(line) for line in lines]
-        if self.keep_only_successful_parsed_lines:
-            events = [event for event in events if event is not None]
-
-        events_df = pd.DataFrame(events)
+    def _finalize_events_df(
+        self,
+        events_df: pd.DataFrame,
+        *,
+        source_label: str,
+        already_sorted: bool = False,
+    ) -> pd.DataFrame:
         if len(events_df) == 0:
-            raise ValueError(f"No parsed syscall lines in {zip_path}")
+            raise ValueError(f"No parsed syscall lines in {source_label}")
 
         if self.direction_filter is not None:
             events_df = events_df[events_df["direction"] == self.direction_filter].copy()
         if len(events_df) == 0:
-            raise ValueError(f"No events left after direction filtering in {zip_path}")
+            raise ValueError(f"No events left after direction filtering in {source_label}")
 
-        events_df = events_df.sort_values("timestamp").reset_index(drop=True)
-        label = int(bool(meta.get("exploit", False)))
-        return meta, events_df, label
+        if not already_sorted:
+            events_df = events_df.sort_values("timestamp").reset_index(drop=True)
+        else:
+            events_df = events_df.reset_index(drop=True)
+        return events_df
+
+    def _parse_sc_handle(self, handle: Iterable[str], *, source_label: str) -> pd.DataFrame:
+        if not self.keep_only_successful_parsed_lines:
+            events = [self._parse_sc_line(line) for line in handle]
+            return self._finalize_events_df(
+                pd.DataFrame(events),
+                source_label=source_label,
+            )
+
+        timestamps: list[int] = []
+        procnames: list[str] = []
+        syscalls: list[SyscallToken] = []
+        directions: list[str] = []
+        res_values: list[int | float] = []
+        needs_sort = False
+        last_timestamp: int | None = None
+
+        for line in handle:
+            parsed = self._parse_sc_line(line)
+            if parsed is None:
+                continue
+            if self.direction_filter is not None and parsed["direction"] != self.direction_filter:
+                continue
+
+            timestamp = int(parsed["timestamp"])
+            if last_timestamp is not None and timestamp < last_timestamp:
+                needs_sort = True
+            last_timestamp = timestamp
+
+            timestamps.append(timestamp)
+            procnames.append(str(parsed["procname"]))
+            syscalls.append(parsed["syscall"])
+            directions.append(str(parsed["direction"]))
+            res_values.append(parsed["res"])
+
+        events_df = pd.DataFrame(
+            {
+                "timestamp": timestamps,
+                "procname": procnames,
+                "syscall": syscalls,
+                "direction": directions,
+                "res": res_values,
+            }
+        )
+        return self._finalize_events_df(
+            events_df,
+            source_label=source_label,
+            already_sorted=not needs_sort,
+        )
 
     def _parse_sc_lines(self, lines: list[str]) -> pd.DataFrame:
-        rows: list[dict[str, Any]] = []
-        for line in lines:
-            parsed = self._parse_sc_line(line)
-            if parsed is not None:
-                rows.append(parsed)
-        return pd.DataFrame(rows)
+        return self._parse_sc_handle(iter(lines), source_label="in-memory trace")
 
     def _read_sc_zip(self, file_path: Path) -> pd.DataFrame:
         with ZipFile(file_path) as archive:
@@ -337,42 +391,74 @@ class LIDDSLoader:
             if not members:
                 raise ValueError(f"No .sc trace found in archive: {file_path}")
             with archive.open(members[0], "r") as handle:
-                lines = TextIOWrapper(handle, encoding="utf-8", errors="ignore").read().splitlines()
-        return self._parse_sc_lines(lines)
+                return self._parse_sc_handle(
+                    TextIOWrapper(handle, encoding="utf-8", errors="ignore"),
+                    source_label=str(file_path),
+                )
 
     def _read_sc_file(self, file_path: Path) -> pd.DataFrame:
-        lines = file_path.read_text(encoding="utf-8", errors="ignore").splitlines()
-        return self._parse_sc_lines(lines)
+        with file_path.open("r", encoding="utf-8", errors="ignore") as handle:
+            return self._parse_sc_handle(handle, source_label=str(file_path))
+
+    def _resolve_loader_workers(self, num_files: int) -> int:
+        if num_files <= 1:
+            return 1
+        if self.loader_workers in {None, 0, "0", 1, "1"}:
+            return 1
+        if self.loader_workers == "auto":
+            return max(1, min(8, os.cpu_count() or 1, num_files))
+        return max(1, min(int(self.loader_workers), num_files))
+
+    def _load_trace_sample(self, file_path: Path) -> tuple[TraceSample | None, str | None]:
+        split, scenario = self._infer_split_and_scenario(file_path)
+        if split is None:
+            return None, None
+
+        try:
+            meta, trace_df, label = self._load_sample_from_zip(file_path)
+        except Exception as error:
+            return None, f"[WARN] skipping {file_path}: {error}"
+
+        if len(trace_df) < 2:
+            return None, None
+
+        return (
+            TraceSample(
+                file_path=str(file_path),
+                label=label,
+                sequence=trace_df["syscall"].tolist(),
+                dataset_name="lid_ds",
+                metadata={
+                    "scenario": scenario,
+                    "split": split,
+                },
+                trace_df=trace_df,
+            ),
+            None,
+        )
 
     def load_all(self) -> list[TraceSample]:
+        file_paths = self._collect_zip_files()
+        num_workers = self._resolve_loader_workers(len(file_paths))
         samples: list[TraceSample] = []
-        for file_path in self._collect_zip_files():
-            split, scenario = self._infer_split_and_scenario(file_path)
-            if split is None:
-                continue
 
-            try:
-                meta, trace_df, label = self._load_sample_from_zip(file_path)
-            except Exception as error:
-                print(f"[WARN] skipping {file_path}: {error}")
-                continue
+        if num_workers == 1:
+            results = map(self._load_trace_sample, file_paths)
+        else:
+            with ThreadPoolExecutor(max_workers=num_workers) as executor:
+                results = executor.map(self._load_trace_sample, file_paths)
+                for sample, warning in results:
+                    if warning is not None:
+                        print(warning)
+                    if sample is not None:
+                        samples.append(sample)
+            return samples
 
-            if len(trace_df) < 2:
-                continue
-
-            samples.append(
-                TraceSample(
-                    file_path=str(file_path),
-                    label=label,
-                    sequence=trace_df["syscall"].tolist(),
-                    dataset_name="lid_ds",
-                    metadata={
-                        "scenario": scenario,
-                        "split": split,
-                    },
-                    trace_df=trace_df,
-                )
-            )
+        for sample, warning in results:
+            if warning is not None:
+                print(warning)
+            if sample is not None:
+                samples.append(sample)
         return samples
 
 
@@ -389,6 +475,7 @@ def load_trace_samples(dataset_cfg: Any) -> list[TraceSample]:
                 "keep_only_successful_parsed_lines",
                 True,
             ),
+            loader_workers=getattr(dataset_cfg, "loader_workers", 1),
         ).load_all()
     raise ValueError(f"Unsupported dataset: {dataset_cfg.name}")
 
