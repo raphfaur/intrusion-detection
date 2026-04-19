@@ -46,6 +46,7 @@ report:
     - lid_bruteforce_wgcn_plus
     - lid_cve_pagerank
     - lid_cve_wgcn_plus
+    - lid_ds_all_tgn
   diagnostic_plot_experiments:
     - adfa_ld_gat_diagnostic
   feature_ablation_experiments:

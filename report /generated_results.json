@@ -825,5 +825,39 @@
       "roc_auc": 1.0,
       "support": 358
     }
+  },
+  "lid_ds_all_tgn": {
+    "architecture": null,
+    "dataset": "lid_ds",
+    "experiment_name": "lid_ds_all_tgn",
+    "history": [],
+    "loaded_scenarios": [
+      "Bruteforce_CWE-307",
+      "CWE-89-SQL-injection"
+    ],
+    "model": "tgn",
+    "model_label": "tgn",
+    "output_dir": "/Users/sleider/ml/intrusion-detection/outputs/lid_ds/tgn/2026-04-19/18-01-01",
+    "plots": {},
+    "scenario": "all",
+    "test": {
+      "accuracy": 0.8156424581005587,
+      "f1": 0.45901639344262296,
+      "precision": 0.4,
+      "recall": 0.5384615384615384,
+      "roc_auc": 0.7593954248366013,
+      "support": 358
+    },
+    "test_samples": 358,
+    "train_samples": 1071,
+    "val_samples": 358,
+    "validation": {
+      "accuracy": 0.8156424581005587,
+      "f1": 0.45901639344262296,
+      "precision": 0.4,
+      "recall": 0.5384615384615384,
+      "roc_auc": 0.7189228255404726,
+      "support": 358
+    }
   }
 }
