@@ -1,0 +1,8 @@
+name: sequence_gru
+embedding_dim: 64
+hidden_dim: 128
+num_layers: 1
+dropout: 0.3
+bidirectional: true
+max_sequence_length: 512
+truncate_strategy: head

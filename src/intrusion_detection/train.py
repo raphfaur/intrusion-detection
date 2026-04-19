@@ -11,9 +11,9 @@ import torch
 from hydra.core.hydra_config import HydraConfig
 from omegaconf import DictConfig
 
-from intrusion_detection.data import load_trace_samples, split_samples
+from intrusion_detection.data import load_trace_samples, split_lid_transfer_samples, split_samples
 from intrusion_detection.reporting import export_results_to_latex
-from intrusion_detection.trainer import run_gnn_experiment, run_pagerank_experiment
+from intrusion_detection.trainer import run_gnn_experiment, run_pagerank_experiment, run_sequence_experiment
 
 CONFIG_DIR = str(Path(__file__).resolve().parents[2] / "configs")
 
@@ -44,18 +44,36 @@ def main(cfg: DictConfig) -> None:
 
     output_dir = Path(HydraConfig.get().runtime.output_dir)
     samples = load_trace_samples(cfg.dataset)
-    train_samples, val_samples, test_samples = split_samples(
-        samples=samples,
-        test_size=cfg.train.test_size,
-        val_size=cfg.train.val_size,
-        random_state=cfg.seed,
-        split_strategy=getattr(cfg.dataset, "split_strategy", "random"),
-        source_split=getattr(cfg.dataset, "resplit_source_split", "test"),
-    )
+    transfer_enabled = bool(getattr(getattr(cfg.dataset, "transfer", {}), "enabled", False))
+    if transfer_enabled:
+        train_samples, val_samples, test_samples = split_lid_transfer_samples(
+            samples=samples,
+            source_scenario=str(cfg.dataset.transfer.source_scenario),
+            target_scenario=str(cfg.dataset.transfer.target_scenario),
+            source_strategy=str(getattr(cfg.dataset.transfer, "source_strategy", "resplit")),
+            source_train_split=str(getattr(cfg.dataset.transfer, "source_train_split", "train")),
+            source_val_split=str(getattr(cfg.dataset.transfer, "source_val_split", "validation")),
+            source_resplit_split=str(getattr(cfg.dataset.transfer, "source_resplit_split", "test")),
+            target_test_split=str(getattr(cfg.dataset.transfer, "target_test_split", "test")),
+            val_size=float(cfg.train.val_size),
+            random_state=cfg.seed,
+        )
+    else:
+        train_samples, val_samples, test_samples = split_samples(
+            samples=samples,
+            test_size=cfg.train.test_size,
+            val_size=cfg.train.val_size,
+            random_state=cfg.seed,
+            split_strategy=getattr(cfg.dataset, "split_strategy", "random"),
+            source_split=getattr(cfg.dataset, "resplit_source_split", "test"),
+        )
 
     summary = {
         "dataset": cfg.dataset.name,
         "model": cfg.model.name,
+        "paradigm": getattr(cfg.train, "paradigm", "supervised"),
+        "node_feature_profile": getattr(cfg.features, "node_profile", "full"),
+        "edge_weight_mode": getattr(cfg.features, "edge_weight_mode", "weighted"),
         "num_samples": len(samples),
         "train_samples": len(train_samples),
         "val_samples": len(val_samples),
@@ -69,9 +87,24 @@ def main(cfg: DictConfig) -> None:
         summary["scenario"] = getattr(cfg.dataset, "scenario", "all")
         summary["loaded_scenarios"] = sorted({sample.metadata.get("scenario", "unknown") for sample in samples})
         summary["split_strategy"] = getattr(cfg.dataset, "split_strategy", "random")
+    if transfer_enabled:
+        summary["evaluation_protocol"] = "cross_scenario"
+        summary["source_scenario"] = str(cfg.dataset.transfer.source_scenario)
+        summary["target_scenario"] = str(cfg.dataset.transfer.target_scenario)
+        summary["scenario"] = f"{cfg.dataset.transfer.source_scenario}->{cfg.dataset.transfer.target_scenario}"
+    else:
+        summary["evaluation_protocol"] = "in_distribution"
 
     if cfg.model.name == "gnn":
         result = run_gnn_experiment(
+            cfg=cfg,
+            train_samples=train_samples,
+            val_samples=val_samples,
+            test_samples=test_samples,
+            output_dir=output_dir,
+        )
+    elif str(cfg.model.name).startswith("sequence_"):
+        result = run_sequence_experiment(
             cfg=cfg,
             train_samples=train_samples,
             val_samples=val_samples,

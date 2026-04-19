@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.6.3)  18 APR 2026 16:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.6.3)  19 APR 2026 18:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -227,6 +227,7 @@ File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
+Package hyperref Info: Option `hypertexnames' set `false' on input line 4040.
 Package hyperref Info: Hyper figures OFF on input line 4157.
 Package hyperref Info: Link nesting OFF on input line 4162.
 Package hyperref Info: Hyper index ON on input line 4165.
@@ -281,147 +282,160 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
 \Hy@SectionHShift=\skip65
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count300
+\float@exts=\toks23
+\float@box=\box56
+\@float@everytoks=\toks24
+\@floatcapt=\box57
 )
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 24.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 25.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count300
-\l__pdf_internal_box=\box56
+\l__color_backend_stack_int=\count301
+\l__pdf_internal_box=\box58
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
  (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count301
+\scratchcounter=\count302
 \scratchdimen=\dimen162
-\scratchbox=\box57
-\nofMPsegments=\count302
-\nofMParguments=\count303
-\everyMPshowfont=\toks23
-\MPscratchCnt=\count304
+\scratchbox=\box59
+\nofMPsegments=\count303
+\nofMParguments=\count304
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count305
 \MPscratchDim=\dimen163
-\MPnumerator=\count305
-\makeMPintoPDFobject=\count306
-\everyMPtoPDFconversion=\toks24
+\MPnumerator=\count306
+\makeMPintoPDFobject=\count307
+\everyMPtoPDFconversion=\toks26
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 24.
+Package hyperref Info: Link coloring OFF on input line 25.
  (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
 
-Underfull \hbox (badness 2884) in paragraph at lines 28--28
+Underfull \hbox (badness 2884) in paragraph at lines 29--29
 []\OT1/ptm/m/sc/17.28 Graph Neu-ral Net-works for Sys-tem Call
  []
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 28.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 29.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 28.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 29.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 28.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 29.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 28.
+LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 29.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/omspcr.fd
 File: omspcr.fd 
 )
 LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 28.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 29.
+
+Overfull \hbox (2.51506pt too wide) in paragraph at lines 29--29
+[][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 
 [1{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 ]
 
-[2] (./generated_graph_inspection.tex
-<figures/graph_nodes_edges_scatter.pdf, id=90, 879.37598pt x 257.70981pt>
+[2]
+
+[3]
+
+[4] (./generated_graph_inspection.tex
+<figures/graph_nodes_edges_scatter.pdf, id=155, 879.37598pt x 257.70981pt>
 File: figures/graph_nodes_edges_scatter.pdf Graphic file (type pdf)
 <use figures/graph_nodes_edges_scatter.pdf>
 Package pdftex.def Info: figures/graph_nodes_edges_scatter.pdf  used on input line 24.
 (pdftex.def)             Requested size: 286.18967pt x 83.87265pt.
-<figures/representative_syscall_graphs.pdf, id=91, 509.79654pt x 626.68137pt>
-File: figures/representative_syscall_graphs.pdf Graphic file (type pdf)
-<use figures/representative_syscall_graphs.pdf>
-Package pdftex.def Info: figures/representative_syscall_graphs.pdf  used on input line 31.
-(pdftex.def)             Requested size: 397.48499pt x 488.62782pt.
 )
 
-[3 <./figures/graph_nodes_edges_scatter.pdf>] (./generated_results.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[5 <./figures/graph_nodes_edges_scatter.pdf>]
+
+[6] (./generated_results.tex
+Underfull \hbox (badness 10000) in paragraph at lines 176--140
+
+ []
 
 
 
-[4 <./figures/representative_syscall_graphs.pdf>]
-<figures/adfa_ld_pagerank_scores.pdf, id=234, 421.16284pt x 260.4074pt>
-File: figures/adfa_ld_pagerank_scores.pdf Graphic file (type pdf)
-<use figures/adfa_ld_pagerank_scores.pdf>
-Package pdftex.def Info: figures/adfa_ld_pagerank_scores.pdf  used on input line 84.
-(pdftex.def)             Requested size: 278.23827pt x 172.03629pt.
-<figures/adfa_ld_gat_loss.pdf, id=235, 424.09567pt x 260.14076pt>
-File: figures/adfa_ld_gat_loss.pdf Graphic file (type pdf)
-<use figures/adfa_ld_gat_loss.pdf>
-Package pdftex.def Info: figures/adfa_ld_gat_loss.pdf  used on input line 90.
-(pdftex.def)             Requested size: 190.79109pt x 117.0305pt.
-<figures/adfa_ld_gat_f1.pdf, id=236, 418.2457pt x 260.28192pt>
-File: figures/adfa_ld_gat_f1.pdf Graphic file (type pdf)
-<use figures/adfa_ld_gat_f1.pdf>
-Package pdftex.def Info: figures/adfa_ld_gat_f1.pdf  used on input line 91.
-(pdftex.def)             Requested size: 190.79109pt x 118.73425pt.
-)
+[7]
+<figures/adfa_ld_gat_diagnostic_loss.pdf, id=252, 419.90816pt x 260.14076pt>
+File: figures/adfa_ld_gat_diagnostic_loss.pdf Graphic file (type pdf)
+<use figures/adfa_ld_gat_diagnostic_loss.pdf>
+Package pdftex.def Info: figures/adfa_ld_gat_diagnostic_loss.pdf  used on input line 245.
+(pdftex.def)             Requested size: 190.79109pt x 118.19751pt.
+<figures/adfa_ld_gat_diagnostic_f1.pdf, id=253, 414.05818pt x 260.28192pt>
+File: figures/adfa_ld_gat_diagnostic_f1.pdf Graphic file (type pdf)
+<use figures/adfa_ld_gat_diagnostic_f1.pdf>
+Package pdftex.def Info: figures/adfa_ld_gat_diagnostic_f1.pdf  used on input line 246.
+(pdftex.def)             Requested size: 190.79109pt x 119.93367pt.
+) (./main.bbl
 
-[5 <./figures/adfa_ld_pagerank_scores.pdf>] (./main.bbl)
+[8 <./figures/adfa_ld_gat_diagnostic_loss.pdf> <./figures/adfa_ld_gat_diagnostic_f1.pdf>])
 
-[6 <./figures/adfa_ld_gat_loss.pdf> <./figures/adfa_ld_gat_f1.pdf>] (./main.aux)
+[9] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 67E9A319916E444E8FF84B2985C76849;1466.
+(rerunfilecheck)             Checksum: 98B793873E9A8129AB8AF75E096DF3B7;1963.
  ) 
 Here is how much of TeX's memory you used:
- 11175 strings out of 473190
- 166490 string characters out of 5715801
- 584404 words of memory out of 5000000
- 34225 multiletter control sequences out of 15000+600000
+ 11373 strings out of 473190
+ 171016 string characters out of 5715801
+ 594487 words of memory out of 5000000
+ 34390 multiletter control sequences out of 15000+600000
  577596 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,1068b,453s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (6 pages, 241405 bytes).
+ 75i,12n,79p,1534b,553s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (9 pages, 265592 bytes).
 PDF statistics:
- 413 PDF objects out of 1000 (max. 8388607)
- 179 compressed objects within 2 object streams
- 38 named destinations out of 1000 (max. 500000)
- 114 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 403 PDF objects out of 1000 (max. 8388607)
+ 259 compressed objects within 3 object streams
+ 67 named destinations out of 1000 (max. 500000)
+ 128 words of extra memory for PDF output out of 10000 (max. 10000000)
 

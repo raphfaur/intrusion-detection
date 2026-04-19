@@ -53,15 +53,73 @@ def _format_metric(value: Any, decimals: int = 4) -> str:
     return str(value)
 
 
+def _metric_float(value: Any) -> float | None:
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return None
+    numeric = float(value)
+    if math.isnan(numeric) or math.isinf(numeric):
+        return None
+    return numeric
+
+
+def _format_table_metric(value: Any, best: bool = False, decimals: int = 4) -> str:
+    formatted = _format_metric(value, decimals=decimals)
+    if best and formatted != "--":
+        return rf"\textbf{{{formatted}}}"
+    return formatted
+
+
+def _group_best_indices(
+    entries: list[dict[str, Any]],
+    group_key: callable,
+    metric_extractors: dict[str, callable],
+) -> dict[tuple[int, str], bool]:
+    highlighted: dict[tuple[int, str], bool] = {}
+    grouped_indices: dict[Any, list[int]] = {}
+    for index, entry in enumerate(entries):
+        grouped_indices.setdefault(group_key(entry), []).append(index)
+
+    for indices in grouped_indices.values():
+        for metric_name, extractor in metric_extractors.items():
+            scored = [
+                (idx, _metric_float(extractor(entries[idx])))
+                for idx in indices
+            ]
+            valid = [(idx, value) for idx, value in scored if value is not None]
+            if not valid:
+                continue
+            best_value = max(value for _, value in valid)
+            for idx, value in valid:
+                if abs(value - best_value) <= 1e-12:
+                    highlighted[(idx, metric_name)] = True
+    return highlighted
+
+
+def _append_group_separator(lines: list[str], entries: list[dict[str, Any]], index: int, group_key: callable) -> None:
+    is_last = index == len(entries) - 1
+    if not is_last and group_key(entries[index]) != group_key(entries[index + 1]):
+        lines.append(r"\hline")
+
+
 def _default_experiment_name(payload: dict[str, Any]) -> str:
     summary = payload["summary"]
     dataset = str(summary["dataset"])
     model = str(summary["model"])
     scenario = str(summary.get("scenario", "all"))
     architecture = str(summary.get("architecture", "")).strip()
+    paradigm = str(summary.get("paradigm", "")).strip()
+    node_profile = str(summary.get("node_feature_profile", "")).strip()
+    edge_mode = str(summary.get("edge_weight_mode", "")).strip()
+    parts = [dataset, scenario, model]
     if architecture:
-        return _slugify(f"{dataset}_{scenario}_{model}_{architecture}")
-    return _slugify(f"{dataset}_{scenario}_{model}")
+        parts.append(architecture)
+    if paradigm and paradigm != "supervised":
+        parts.append(paradigm)
+    if node_profile and node_profile != "full":
+        parts.append(node_profile)
+    if edge_mode and edge_mode != "weighted":
+        parts.append(edge_mode)
+    return _slugify("_".join(parts))
 
 
 def _load_registry(path: Path) -> dict[str, Any]:
@@ -87,10 +145,16 @@ def _build_registry_entry(
         "experiment_name": experiment_name,
         "dataset": summary["dataset"],
         "scenario": summary.get("scenario", "all"),
+        "evaluation_protocol": summary.get("evaluation_protocol", "in_distribution"),
+        "source_scenario": summary.get("source_scenario"),
+        "target_scenario": summary.get("target_scenario"),
         "loaded_scenarios": summary.get("loaded_scenarios", []),
         "model": model_name,
+        "paradigm": result.get("paradigm", summary.get("paradigm", "supervised")),
         "architecture": architecture,
         "model_label": model_label,
+        "node_feature_profile": summary.get("node_feature_profile", "full"),
+        "edge_weight_mode": summary.get("edge_weight_mode", "weighted"),
         "output_dir": str(output_dir),
         "train_samples": summary["train_samples"],
         "val_samples": summary["val_samples"],
@@ -108,6 +172,13 @@ def _normalize_registry(registry: dict[str, Any]) -> dict[str, Any]:
         if entry.get("model") == "gnn" and not entry.get("architecture"):
             entry["architecture"] = "wgcn_plus"
             entry["model_label"] = "gnn:wgcn_plus"
+        if entry.get("model") == "pagerank":
+            entry["paradigm"] = "anomaly"
+        if not entry.get("paradigm"):
+            entry["paradigm"] = "supervised" if entry.get("model") == "gnn" else "anomaly"
+        entry.setdefault("node_feature_profile", "full")
+        entry.setdefault("edge_weight_mode", "weighted")
+        entry.setdefault("evaluation_protocol", "in_distribution")
     return normalized
 
 
@@ -136,9 +207,20 @@ def _render_result_macros(entries: list[dict[str, Any]]) -> list[str]:
 
 
 def _render_result_table(entries: list[dict[str, Any]]) -> list[str]:
+    best = _group_best_indices(
+        entries,
+        group_key=lambda entry: (entry["dataset"], entry["scenario"]),
+        metric_extractors={
+            "accuracy": lambda entry: entry["test"].get("accuracy"),
+            "f1": lambda entry: entry["test"].get("f1"),
+            "precision": lambda entry: entry["test"].get("precision"),
+            "recall": lambda entry: entry["test"].get("recall"),
+            "roc_auc": lambda entry: entry["test"].get("roc_auc"),
+        },
+    )
     lines = [
         r"\subsection{Automated Results}",
-        r"\begin{table}[t]",
+        r"\begin{table}[H]",
         r"\centering",
         r"\resizebox{\linewidth}{!}{%",
         r"\begin{tabular}{lllrrrrr}",
@@ -147,7 +229,7 @@ def _render_result_table(entries: list[dict[str, Any]]) -> list[str]:
         r"\hline",
     ]
 
-    for entry in entries:
+    for index, entry in enumerate(entries):
         metrics = entry["test"]
         lines.append(
             " & ".join(
@@ -155,15 +237,16 @@ def _render_result_table(entries: list[dict[str, Any]]) -> list[str]:
                     _latex_escape(str(entry["dataset"])),
                     _latex_escape(str(entry["scenario"])),
                     _latex_escape(str(entry.get("model_label", entry["model"]))),
-                    _format_metric(metrics.get("accuracy")),
-                    _format_metric(metrics.get("f1")),
-                    _format_metric(metrics.get("precision")),
-                    _format_metric(metrics.get("recall")),
-                    _format_metric(metrics.get("roc_auc")),
+                    _format_table_metric(metrics.get("accuracy"), best.get((index, "accuracy"), False)),
+                    _format_table_metric(metrics.get("f1"), best.get((index, "f1"), False)),
+                    _format_table_metric(metrics.get("precision"), best.get((index, "precision"), False)),
+                    _format_table_metric(metrics.get("recall"), best.get((index, "recall"), False)),
+                    _format_table_metric(metrics.get("roc_auc"), best.get((index, "roc_auc"), False)),
                 ]
             )
             + r" \\"
         )
+        _append_group_separator(lines, entries, index, lambda item: (item["dataset"], item["scenario"]))
 
     lines.extend(
         [
@@ -172,6 +255,260 @@ def _render_result_table(entries: list[dict[str, Any]]) -> list[str]:
             r"}",
             r"\caption{Test-set metrics exported automatically from the training pipeline.}",
             r"\label{tab:automated-results}",
+            r"\end{table}",
+        ]
+    )
+    return lines
+
+
+def _pretty_feature_profile(value: str) -> str:
+    mapping = {
+        "full": "full",
+        "embedding_only": "embedding-only",
+        "frequency": "frequency",
+        "transition": "transition",
+        "structural": "structural",
+        "behavioral": "behavioral",
+        "temporal": "temporal",
+    }
+    return mapping.get(value, value)
+
+
+def _pretty_paradigm(value: str) -> str:
+    mapping = {
+        "supervised": "supervised",
+        "contrastive": "contrastive + probe",
+        "anomaly": "anomaly detection",
+    }
+    return mapping.get(value, value)
+
+
+def _render_feature_ablation_table(entries: list[dict[str, Any]]) -> list[str]:
+    if not entries:
+        return []
+
+    best = _group_best_indices(
+        entries,
+        group_key=lambda entry: (entry["dataset"], entry["scenario"]),
+        metric_extractors={
+            "accuracy": lambda entry: entry["test"].get("accuracy"),
+            "f1": lambda entry: entry["test"].get("f1"),
+            "roc_auc": lambda entry: entry["test"].get("roc_auc"),
+        },
+    )
+    lines = [
+        r"\subsection{Feature Ablation}",
+        r"\begin{table}[H]",
+        r"\centering",
+        r"\resizebox{\linewidth}{!}{%",
+        r"\begin{tabular}{llllrrr}",
+        r"\hline",
+        r"Dataset & Scenario & Node features & Edge mode & Acc. & F1 & ROC-AUC \\",
+        r"\hline",
+    ]
+    for index, entry in enumerate(entries):
+        metrics = entry["test"]
+        lines.append(
+            " & ".join(
+                [
+                    _latex_escape(str(entry["dataset"])),
+                    _latex_escape(str(entry["scenario"])),
+                    _latex_escape(_pretty_feature_profile(str(entry.get("node_feature_profile", "full")))),
+                    _latex_escape(str(entry.get("edge_weight_mode", "weighted"))),
+                    _format_table_metric(metrics.get("accuracy"), best.get((index, "accuracy"), False)),
+                    _format_table_metric(metrics.get("f1"), best.get((index, "f1"), False)),
+                    _format_table_metric(metrics.get("roc_auc"), best.get((index, "roc_auc"), False)),
+                ]
+            )
+            + r" \\"
+        )
+        _append_group_separator(lines, entries, index, lambda item: (item["dataset"], item["scenario"]))
+    lines.extend(
+        [
+            r"\hline",
+            r"\end{tabular}",
+            r"}",
+            r"\caption{Ablation of node and edge features for the selected supervised GNN runs.}",
+            r"\label{tab:feature-ablation}",
+            r"\end{table}",
+        ]
+    )
+    return lines
+
+
+def _render_paradigm_table(entries: list[dict[str, Any]]) -> list[str]:
+    if not entries:
+        return []
+
+    best = _group_best_indices(
+        entries,
+        group_key=lambda entry: (entry["dataset"], entry["scenario"]),
+        metric_extractors={
+            "accuracy": lambda entry: entry["test"].get("accuracy"),
+            "f1": lambda entry: entry["test"].get("f1"),
+            "roc_auc": lambda entry: entry["test"].get("roc_auc"),
+        },
+    )
+    lines = [
+        r"\subsection{Learning Paradigms}",
+        r"\begin{table}[H]",
+        r"\centering",
+        r"\resizebox{\linewidth}{!}{%",
+        r"\begin{tabular}{llllrrr}",
+        r"\hline",
+        r"Dataset & Scenario & Paradigm & Model & Acc. & F1 & ROC-AUC \\",
+        r"\hline",
+    ]
+    for index, entry in enumerate(entries):
+        metrics = entry["test"]
+        lines.append(
+            " & ".join(
+                [
+                    _latex_escape(str(entry["dataset"])),
+                    _latex_escape(str(entry["scenario"])),
+                    _latex_escape(_pretty_paradigm(str(entry.get("paradigm", "supervised")))),
+                    _latex_escape(str(entry.get("model_label", entry["model"]))),
+                    _format_table_metric(metrics.get("accuracy"), best.get((index, "accuracy"), False)),
+                    _format_table_metric(metrics.get("f1"), best.get((index, "f1"), False)),
+                    _format_table_metric(metrics.get("roc_auc"), best.get((index, "roc_auc"), False)),
+                ]
+            )
+            + r" \\"
+        )
+        _append_group_separator(lines, entries, index, lambda item: (item["dataset"], item["scenario"]))
+    lines.extend(
+        [
+            r"\hline",
+            r"\end{tabular}",
+            r"}",
+            r"\caption{Comparison of supervised and anomaly-detection training settings.}",
+            r"\label{tab:learning-paradigms}",
+            r"\end{table}",
+        ]
+    )
+    return lines
+
+
+def _pretty_model_label(entry: dict[str, Any]) -> str:
+    model = str(entry.get("model", ""))
+    if model == "gnn":
+        return str(entry.get("model_label", "gnn"))
+    if model == "sequence_logreg":
+        return "seq:tfidf-logreg"
+    if model == "sequence_gru":
+        return "seq:gru"
+    return str(entry.get("model_label", model))
+
+
+def _render_sequence_table(entries: list[dict[str, Any]]) -> list[str]:
+    if not entries:
+        return []
+
+    best = _group_best_indices(
+        entries,
+        group_key=lambda entry: (entry["dataset"], entry["scenario"]),
+        metric_extractors={
+            "accuracy": lambda entry: entry["test"].get("accuracy"),
+            "f1": lambda entry: entry["test"].get("f1"),
+            "roc_auc": lambda entry: entry["test"].get("roc_auc"),
+        },
+    )
+    lines = [
+        r"\subsection{Sequence Baselines}",
+        r"\begin{table}[H]",
+        r"\centering",
+        r"\resizebox{\linewidth}{!}{%",
+        r"\begin{tabular}{llllrrr}",
+        r"\hline",
+        r"Dataset & Scenario & Model & Paradigm & Acc. & F1 & ROC-AUC \\",
+        r"\hline",
+    ]
+    for index, entry in enumerate(entries):
+        metrics = entry["test"]
+        lines.append(
+            " & ".join(
+                [
+                    _latex_escape(str(entry["dataset"])),
+                    _latex_escape(str(entry["scenario"])),
+                    _latex_escape(_pretty_model_label(entry)),
+                    _latex_escape(_pretty_paradigm(str(entry.get("paradigm", "supervised")))),
+                    _format_table_metric(metrics.get("accuracy"), best.get((index, "accuracy"), False)),
+                    _format_table_metric(metrics.get("f1"), best.get((index, "f1"), False)),
+                    _format_table_metric(metrics.get("roc_auc"), best.get((index, "roc_auc"), False)),
+                ]
+            )
+            + r" \\"
+        )
+        _append_group_separator(lines, entries, index, lambda item: (item["dataset"], item["scenario"]))
+    lines.extend(
+        [
+            r"\hline",
+            r"\end{tabular}",
+            r"}",
+            r"\caption{Non-graph baselines trained directly on the syscall sequence.}",
+            r"\label{tab:sequence-baselines}",
+            r"\end{table}",
+        ]
+    )
+    return lines
+
+
+def _render_transfer_table(entries: list[dict[str, Any]]) -> list[str]:
+    if not entries:
+        return []
+
+    best_target = _group_best_indices(
+        entries,
+        group_key=lambda entry: (entry.get("source_scenario"), entry.get("target_scenario")),
+        metric_extractors={
+            "target_accuracy": lambda entry: entry["test"].get("accuracy"),
+            "target_f1": lambda entry: entry["test"].get("f1"),
+            "target_roc_auc": lambda entry: entry["test"].get("roc_auc"),
+        },
+    )
+    lines = [
+        r"\subsection{Cross-Scenario Generalization}",
+        r"\begin{table}[H]",
+        r"\centering",
+        r"\resizebox{\linewidth}{!}{%",
+        r"\begin{tabular}{llllrrrrrr}",
+        r"\hline",
+        r"Train scenario & Test scenario & Model & Paradigm & Src. Acc. & Src. F1 & Src. AUC & Tgt. Acc. & Tgt. F1 & Tgt. AUC \\",
+        r"\hline",
+    ]
+    for index, entry in enumerate(entries):
+        source_metrics = entry.get("validation", {})
+        metrics = entry["test"]
+        lines.append(
+            " & ".join(
+                [
+                    _latex_escape(str(entry.get("source_scenario", "--"))),
+                    _latex_escape(str(entry.get("target_scenario", "--"))),
+                    _latex_escape(_pretty_model_label(entry)),
+                    _latex_escape(_pretty_paradigm(str(entry.get("paradigm", "supervised")))),
+                    _format_metric(source_metrics.get("accuracy")),
+                    _format_metric(source_metrics.get("f1")),
+                    _format_metric(source_metrics.get("roc_auc")),
+                    _format_table_metric(metrics.get("accuracy"), best_target.get((index, "target_accuracy"), False)),
+                    _format_table_metric(metrics.get("f1"), best_target.get((index, "target_f1"), False)),
+                    _format_table_metric(metrics.get("roc_auc"), best_target.get((index, "target_roc_auc"), False)),
+                ]
+            )
+            + r" \\"
+        )
+        _append_group_separator(
+            lines,
+            entries,
+            index,
+            lambda item: (item.get("source_scenario"), item.get("target_scenario")),
+        )
+    lines.extend(
+        [
+            r"\hline",
+            r"\end{tabular}",
+            r"}",
+            r"\caption{Transfer from one LID-DS attack scenario to another. The source columns report validation metrics on the source scenario, while the target columns report test metrics on the target scenario.}",
+            r"\label{tab:cross-scenario-generalization}",
             r"\end{table}",
         ]
     )
@@ -195,7 +532,7 @@ def _render_training_plots(entries: list[dict[str, Any]], report_dir: Path) -> l
         lines.extend(
             [
                 rf"\subsection{{Diagnostics: {_latex_escape(entry['experiment_name'])}}}",
-                r"\begin{figure}[t]",
+                r"\begin{figure}[H]",
                 r"\centering",
             ]
         )
@@ -220,20 +557,37 @@ def _render_training_plots(entries: list[dict[str, Any]], report_dir: Path) -> l
                     else rf"\caption{{Diagnostic plot for \texttt{{{_latex_escape(entry['experiment_name'])}}}: "
                     r"distribution of test anomaly scores with the decision threshold.}"
                 ),
+                rf"\label{{fig:{_slugify(entry['experiment_name'])}-diagnostics}}",
                 r"\end{figure}",
             ]
         )
     return lines
 
 
-def _render_tex(entries: list[dict[str, Any]], report_dir: Path) -> str:
+def _render_tex(
+    benchmark_entries: list[dict[str, Any]],
+    feature_entries: list[dict[str, Any]],
+    paradigm_entries: list[dict[str, Any]],
+    sequence_entries: list[dict[str, Any]],
+    transfer_entries: list[dict[str, Any]],
+    diagnostic_entries: list[dict[str, Any]],
+    report_dir: Path,
+) -> str:
     lines = [
         "% Auto-generated by intrusion_detection. Do not edit manually.",
-        *(_render_result_macros(entries)),
+        *(_render_result_macros(benchmark_entries + feature_entries + paradigm_entries + sequence_entries + transfer_entries)),
         "",
-        *(_render_result_table(entries)),
+        *(_render_result_table(benchmark_entries)),
         "",
-        *(_render_training_plots(entries, report_dir)),
+        *(_render_feature_ablation_table(feature_entries)),
+        "",
+        *(_render_paradigm_table(paradigm_entries)),
+        "",
+        *(_render_sequence_table(sequence_entries)),
+        "",
+        *(_render_transfer_table(transfer_entries)),
+        "",
+        *(_render_training_plots(diagnostic_entries, report_dir)),
         "",
     ]
     return "\n".join(lines)
@@ -288,11 +642,42 @@ def export_results_to_latex(
         registry,
         list(getattr(cfg.report, "included_experiments", [])),
     )
+    feature_entries = _ordered_entries(
+        registry,
+        list(getattr(cfg.report, "feature_ablation_experiments", [])),
+    )
+    paradigm_entries = _ordered_entries(
+        registry,
+        list(getattr(cfg.report, "paradigm_experiments", [])),
+    )
+    sequence_entries = _ordered_entries(
+        registry,
+        list(getattr(cfg.report, "sequence_experiments", [])),
+    )
+    transfer_entries = _ordered_entries(
+        registry,
+        list(getattr(cfg.report, "transfer_experiments", [])),
+    )
+    diagnostic_entries = _ordered_entries(
+        registry,
+        list(getattr(cfg.report, "diagnostic_plot_experiments", [])),
+    )
     registry_path.write_text(
         json.dumps(registry, indent=2, sort_keys=True),
         encoding="utf-8",
     )
-    tex_path.write_text(_render_tex(ordered_entries, report_dir), encoding="utf-8")
+    tex_path.write_text(
+        _render_tex(
+            ordered_entries,
+            feature_entries,
+            paradigm_entries,
+            sequence_entries,
+            transfer_entries,
+            diagnostic_entries,
+            report_dir,
+        ),
+        encoding="utf-8",
+    )
 
     return {
         "experiment_name": experiment_name,

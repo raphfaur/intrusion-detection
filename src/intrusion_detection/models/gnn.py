@@ -58,6 +58,7 @@ class SyscallGraphClassifier(nn.Module):
             self.norms.append(nn.LayerNorm(hidden_dim) if self.use_layer_norm else nn.Identity())
 
         classifier_input_dim = hidden_dim * 2 if self.use_hybrid_pooling else hidden_dim
+        self.graph_embedding_dim = classifier_input_dim
 
         self.classifier = nn.Sequential(
             nn.Linear(classifier_input_dim, hidden_dim),
@@ -97,14 +98,14 @@ class SyscallGraphClassifier(nn.Module):
         raise ValueError(f"Unsupported pooling mode: {self.pooling}")
 
     def _apply_conv(self, conv: nn.Module, x: torch.Tensor, edge_index: torch.Tensor, edge_weight: torch.Tensor) -> torch.Tensor:
-        if self.architecture == "gcn":
+        if self.architecture in {"gcn", "wgcn_plus"}:
             return conv(x, edge_index, edge_weight)
         if self.architecture == "gat":
             edge_attr = edge_weight.view(-1, 1) if edge_weight.numel() > 0 else None
             return conv(x, edge_index, edge_attr=edge_attr)
         return conv(x, edge_index)
 
-    def forward(self, data) -> torch.Tensor:
+    def encode(self, data) -> torch.Tensor:
         embedded = self.embedding(data.node_ids)
         x = torch.cat([embedded, data.x], dim=1)
 
@@ -115,5 +116,10 @@ class SyscallGraphClassifier(nn.Module):
             if index < len(self.convs) - 1:
                 x = F.dropout(x, p=self.dropout, training=self.training)
 
-        pooled = self._pool(x, data.batch)
-        return self.classifier(pooled)
+        return self._pool(x, data.batch)
+
+    def classify_embeddings(self, embeddings: torch.Tensor) -> torch.Tensor:
+        return self.classifier(embeddings)
+
+    def forward(self, data) -> torch.Tensor:
+        return self.classify_embeddings(self.encode(data))

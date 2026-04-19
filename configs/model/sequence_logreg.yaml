@@ -1,0 +1,6 @@
+name: sequence_logreg
+ngram_min: 1
+ngram_max: 3
+min_df: 1
+max_iter: 1000
+c: 1.0

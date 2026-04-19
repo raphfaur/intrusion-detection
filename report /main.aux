@@ -5,45 +5,80 @@
 \citation{adfa}
 \citation{lid_ds}
 \citation{gcn}
+\citation{graphsage}
+\citation{gat}
+\citation{unm_syscalls}
+\citation{unm_syscalls,alt_syscall_models}
+\citation{syscall_graphs}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction/Motivation}{1}{section.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Problem Definition}{1}{section.2}\protected@file@percent }
+\citation{unm_syscalls,alt_syscall_models}
 \citation{syscall_graphs}
 \citation{gcn}
+\citation{graphsage}
+\citation{gat}
 \citation{pagerank_ids}
 \citation{adfa}
 \citation{lid_ds}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Problem Definition}{2}{section.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3}Related Work}{2}{section.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}Methodology}{2}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Datasets and preprocessing.}{2}{section*.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Graph construction and node features.}{2}{section*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{PageRank baseline.}{2}{section*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{GNN models.}{2}{section*.4}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Graph-level inspection of the datasets used by the training pipeline. For LID-DS, the inspection follows the same selection as the experiments and therefore focuses on the original \texttt  {test} traces before the local stratified re-split.}}{3}{table.1}\protected@file@percent }
-\newlabel{tab:graph-inspection}{{1}{3}{Graph-level inspection of the datasets used by the training pipeline. For LID-DS, the inspection follows the same selection as the experiments and therefore focuses on the original \texttt {test} traces before the local stratified re-split}{table.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Number of nodes versus number of edges for the generated syscall graphs, colored by class.}}{3}{figure.1}\protected@file@percent }
-\newlabel{fig:graph-inspection}{{1}{3}{Number of nodes versus number of edges for the generated syscall graphs, colored by class}{figure.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Training protocol.}{3}{section*.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Graph Inspection}{3}{subsection.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Evaluation}{3}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Experimental setting.}{3}{section*.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Main observations.}{3}{section*.7}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Representative transition matrices selected near the mean graph profile for each dataset/scenario and class. Each panel shows the normalized weighted adjacency restricted to the most central syscalls of the selected trace. On ADFA-LD, the axis labels are the raw syscall identifiers provided by the dataset; on LID-DS, they are syscall names parsed from the \texttt  {.sc} traces.}}{4}{figure.2}\protected@file@percent }
-\newlabel{fig:representative-graphs}{{2}{4}{Representative transition matrices selected near the mean graph profile for each dataset/scenario and class. Each panel shows the normalized weighted adjacency restricted to the most central syscalls of the selected trace. On ADFA-LD, the axis labels are the raw syscall identifiers provided by the dataset; on LID-DS, they are syscall names parsed from the \texttt {.sc} traces}{figure.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Test-set metrics exported automatically from the training pipeline.}}{5}{table.2}\protected@file@percent }
-\newlabel{tab:automated-results}{{2}{5}{Test-set metrics exported automatically from the training pipeline}{table.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Diagnostic plot for \texttt  {adfa\_ld\_pagerank}: distribution of test anomaly scores with the decision threshold.}}{5}{figure.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Interpretation and limitations.}{5}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Automated Results}{5}{subsection.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Diagnostics: adfa\_ld\_pagerank}{5}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Diagnostics: adfa\_ld\_gat}{5}{subsection.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{5}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Datasets and preprocessing.}{2}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Graph construction and node features.}{2}{section*.6}\protected@file@percent }
+\citation{unm_syscalls,alt_syscall_models}
+\citation{gcn}
+\@writefile{toc}{\contentsline {paragraph}{Feature variation.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{PageRank baseline.}{3}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sequence-only baselines.}{3}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{GNN models.}{3}{section*.10}\protected@file@percent }
+\citation{graphsage}
+\citation{gat}
+\@writefile{toc}{\contentsline {paragraph}{Training protocol.}{4}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Learning paradigms.}{4}{section*.12}\protected@file@percent }
+\citation{deep_svdd}
+\@writefile{toc}{\contentsline {paragraph}{Cross-scenario protocol.}{5}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Graph Inspection}{5}{subsection.14}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Graph-level inspection of the datasets used by the training pipeline, computed on the same trace pools as the reported experiments.}}{5}{table.16}\protected@file@percent }
+\newlabel{tab:graph-inspection}{{1}{5}{Graph-level inspection of the datasets used by the training pipeline, computed on the same trace pools as the reported experiments}{table.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Number of nodes versus number of edges for the generated syscall graphs, colored by class.}}{5}{figure.18}\protected@file@percent }
+\newlabel{fig:graph-inspection}{{1}{5}{Number of nodes versus number of edges for the generated syscall graphs, colored by class}{figure.18}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Evaluation}{6}{section.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Experimental setting.}{6}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Main observations.}{6}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Feature ablation.}{6}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Learning paradigms.}{6}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sequence-only baselines.}{6}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-scenario generalization.}{6}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Interpretation and limitations.}{7}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Automated Results}{7}{subsection.27}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Test-set metrics exported automatically from the training pipeline.}}{7}{table.29}\protected@file@percent }
+\newlabel{tab:automated-results}{{2}{7}{Test-set metrics exported automatically from the training pipeline}{table.29}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Feature Ablation}{7}{subsection.30}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Ablation of node and edge features for the selected supervised GNN runs.}}{7}{table.32}\protected@file@percent }
+\newlabel{tab:feature-ablation}{{3}{7}{Ablation of node and edge features for the selected supervised GNN runs}{table.32}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Learning Paradigms}{7}{subsection.33}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Comparison of supervised and anomaly-detection training settings.}}{7}{table.35}\protected@file@percent }
+\newlabel{tab:learning-paradigms}{{4}{7}{Comparison of supervised and anomaly-detection training settings}{table.35}{}}
 \bibstyle{iclr2025_conference}
 \bibdata{references}
 \bibcite{adfa}{{1}{2013}{{Creech \& Hu}}{{Creech and Hu}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Sequence Baselines}{8}{subsection.36}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Non-graph baselines trained directly on the syscall sequence.}}{8}{table.38}\protected@file@percent }
+\newlabel{tab:sequence-baselines}{{5}{8}{Non-graph baselines trained directly on the syscall sequence}{table.38}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Cross-Scenario Generalization}{8}{subsection.39}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Transfer from one LID-DS attack scenario to another. The source columns report validation metrics on the source scenario, while the target columns report test metrics on the target scenario.}}{8}{table.41}\protected@file@percent }
+\newlabel{tab:cross-scenario-generalization}{{6}{8}{Transfer from one LID-DS attack scenario to another. The source columns report validation metrics on the source scenario, while the target columns report test metrics on the target scenario}{table.41}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Diagnostics: adfa\_ld\_gat\_diagnostic}{8}{subsection.42}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Training diagnostics for \texttt  {adfa\_ld\_gat\_diagnostic}: cross-entropy loss and F1 score as a function of epoch.}}{8}{figure.44}\protected@file@percent }
+\newlabel{fig:adfa_ld_gat_diagnostic-diagnostics}{{2}{8}{Training diagnostics for \texttt {adfa\_ld\_gat\_diagnostic}: cross-entropy loss and F1 score as a function of epoch}{figure.44}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{8}{section.45}\protected@file@percent }
 \bibcite{lid_ds}{{2}{2021}{{et~al.}}{{}}}
-\bibcite{gcn}{{3}{2017}{{Kipf \& Welling}}{{Kipf and Welling}}}
-\bibcite{pagerank_ids}{{4}{2013}{{Unknown}}{{}}}
-\bibcite{syscall_graphs}{{5}{2018}{{Various}}{{}}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Training diagnostics for \texttt  {adfa\_ld\_gat}: cross-entropy loss and F1 score as a function of epoch.}}{6}{figure.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}References}{6}{section.7}\protected@file@percent }
-\gdef \@abspage@last{6}
+\bibcite{syscall_graphs}{{3}{2018}{{Grimmer et~al.}}{{Grimmer, R{\"o}hling, Kricke, Franczyk, and Rahm}}}
+\bibcite{graphsage}{{4}{2017}{{Hamilton et~al.}}{{Hamilton, Ying, and Leskovec}}}
+\bibcite{unm_syscalls}{{5}{1998}{{Hofmeyr et~al.}}{{Hofmeyr, Forrest, and Somayaji}}}
+\bibcite{gcn}{{6}{2017}{{Kipf \& Welling}}{{Kipf and Welling}}}
+\bibcite{pagerank_ids}{{7}{2013}{{Qian et~al.}}{{Qian, Li, Cai, Zhang, and Xin}}}
+\bibcite{deep_svdd}{{8}{2018}{{Ruff et~al.}}{{Ruff, Vandermeulen, G{\"o}rnitz, Deecke, Siddiqui, Binder, M{\"u}ller, and Kloft}}}
+\bibcite{gat}{{9}{2018}{{Veli{\v {c}}kovi{\'c} et~al.}}{{Veli{\v {c}}kovi{\'c}, Cucurull, Casanova, Romero, Li{\`o}, and Bengio}}}
+\bibcite{alt_syscall_models}{{10}{1999}{{Warrender et~al.}}{{Warrender, Forrest, and Pearlmutter}}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}References}{9}{section.46}\protected@file@percent }
+\gdef \@abspage@last{9}

@@ -1,4 +1,4 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{10}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -8,26 +8,66 @@
 \bibitem[Creech \& Hu(2013)Creech and Hu]{adfa}
 Gideon Creech and Jiankun Hu.
 \newblock Adfa-ld: A new dataset for host-based intrusion detection.
-\newblock 2013.
+\newblock \emph{Proceedings of the 2013 Military Communications and Information
+  Systems Conference}, 2013.
 
 \bibitem[et~al.(2021)]{lid_ds}
 Kiss et~al.
 \newblock A modern and sophisticated host-based intrusion detection dataset.
-\newblock 2021.
+\newblock \emph{Cybersecurity}, 2021.
+
+\bibitem[Grimmer et~al.(2018)Grimmer, R{\"o}hling, Kricke, Franczyk, and
+  Rahm]{syscall_graphs}
+Martin Grimmer, Martin~Max R{\"o}hling, Matthias Kricke, Bogdan Franczyk, and
+  Erhard Rahm.
+\newblock Intrusion detection on system call graphs.
+\newblock In \emph{25. DFN-Konferenz Sicherheit in vernetzten Systemen}, 2018.
+
+\bibitem[Hamilton et~al.(2017)Hamilton, Ying, and Leskovec]{graphsage}
+William~L. Hamilton, Rex Ying, and Jure Leskovec.
+\newblock Inductive representation learning on large graphs.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2017.
+
+\bibitem[Hofmeyr et~al.(1998)Hofmeyr, Forrest, and Somayaji]{unm_syscalls}
+Steven~A. Hofmeyr, Stephanie Forrest, and Anil Somayaji.
+\newblock Intrusion detection using sequences of system calls.
+\newblock \emph{Journal of Computer Security}, 6\penalty0 (3):\penalty0
+  151--180, 1998.
+\newblock \doi{10.3233/JCS-980109}.
 
 \bibitem[Kipf \& Welling(2017)Kipf and Welling]{gcn}
 Thomas Kipf and Max Welling.
 \newblock Semi-supervised classification with graph convolutional networks.
 \newblock In \emph{ICLR}, 2017.
 
-\bibitem[Unknown(2013)]{pagerank_ids}
-Unknown.
+\bibitem[Qian et~al.(2013)Qian, Li, Cai, Zhang, and Xin]{pagerank_ids}
+Quan Qian, Jianyu Li, Jing Cai, Rui Zhang, and Mingjun Xin.
 \newblock An anomaly intrusion detection method based on pagerank algorithm.
-\newblock \emph{IEEE}, 2013.
+\newblock In \emph{2013 IEEE International Conference on Green Computing and
+  Communications and IEEE Internet of Things and IEEE Cyber, Physical and
+  Social Computing}, pp.\  2226--2230. IEEE, 2013.
 
-\bibitem[Various(2018)]{syscall_graphs}
-Various.
-\newblock Intrusion detection on system call graphs.
-\newblock 2018.
+\bibitem[Ruff et~al.(2018)Ruff, Vandermeulen, G{\"o}rnitz, Deecke, Siddiqui,
+  Binder, M{\"u}ller, and Kloft]{deep_svdd}
+Lukas Ruff, Robert~A. Vandermeulen, Nico G{\"o}rnitz, Lucas Deecke,
+  Shoaib~Ahmed Siddiqui, Alexander Binder, Emmanuel M{\"u}ller, and Marius
+  Kloft.
+\newblock Deep one-class classification.
+\newblock In \emph{Proceedings of the 35th International Conference on Machine
+  Learning}, pp.\  4393--4402, 2018.
+
+\bibitem[Veli{\v{c}}kovi{\'c} et~al.(2018)Veli{\v{c}}kovi{\'c}, Cucurull,
+  Casanova, Romero, Li{\`o}, and Bengio]{gat}
+Petar Veli{\v{c}}kovi{\'c}, Guillem Cucurull, Arantxa Casanova, Adriana Romero,
+  Pietro Li{\`o}, and Yoshua Bengio.
+\newblock Graph attention networks.
+\newblock In \emph{International Conference on Learning Representations}, 2018.
+
+\bibitem[Warrender et~al.(1999)Warrender, Forrest, and
+  Pearlmutter]{alt_syscall_models}
+Christina Warrender, Stephanie Forrest, and Barak Pearlmutter.
+\newblock Detecting intrusions using system calls: Alternative data models.
+\newblock In \emph{1999 IEEE Symposium on Security and Privacy}, pp.\
+  133--145. IEEE, 1999.
 
 \end{thebibliography}

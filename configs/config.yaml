@@ -12,9 +12,20 @@ train:
   batch_size: 32
   eval_batch_size: 64
   epochs: 30
+  paradigm: supervised
   lr: 0.001
   weight_decay: 0.0001
   scale_node_features: true
+  contrastive_pretrain_epochs: 15
+  linear_probe_epochs: 15
+  contrastive_temperature: 0.2
+  contrastive_edge_dropout: 0.15
+  contrastive_feature_mask: 0.1
+  anomaly_threshold_grid_size: 41
+
+features:
+  node_profile: full
+  edge_weight_mode: weighted
 
 report:
   enabled: false
@@ -36,8 +47,25 @@ report:
     - lid_cve_pagerank
     - lid_cve_wgcn_plus
   diagnostic_plot_experiments:
-    - adfa_ld_gat
-    - adfa_ld_pagerank
+    - adfa_ld_gat_diagnostic
+  feature_ablation_experiments:
+    - lid_bruteforce_feat_embedding_only_binary
+    - lid_bruteforce_feat_structural_binary
+    - lid_bruteforce_feat_full_binary
+    - lid_bruteforce_feat_full_weighted
+  paradigm_experiments:
+    - adfa_ld_paradigm_supervised
+    - adfa_ld_paradigm_anomaly
+  sequence_experiments:
+    - adfa_ld_sequence_logreg
+    - adfa_ld_sequence_gru
+    - lid_bruteforce_sequence_logreg
+    - lid_bruteforce_sequence_gru
+  transfer_experiments:
+    - lid_transfer_wgcn_plus
+    - lid_transfer_sequence_logreg
+    - lid_transfer_sequence_gru
+    - lid_transfer_pagerank
 
 hydra:
   run:

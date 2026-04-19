@@ -47,6 +47,23 @@ LID_NODE_FEATURE_NAMES = [
     "self_loop",
 ]
 
+FEATURE_PROFILES = {
+    "adfa_ld": {
+        "full": ADFA_NODE_FEATURE_NAMES,
+        "embedding_only": [],
+        "frequency": ["freq"],
+        "transition": ["freq", "in_wdeg", "out_wdeg", "pagerank", "self_loop"],
+        "structural": ["freq", "in_deg", "out_deg", "in_wdeg", "out_wdeg", "pagerank", "self_loop"],
+    },
+    "lid_ds": {
+        "full": LID_NODE_FEATURE_NAMES,
+        "embedding_only": [],
+        "structural": ["freq", "count", "in_deg", "out_deg", "in_wdeg", "out_wdeg", "pagerank", "self_loop"],
+        "behavioral": ["freq", "count", "unique_proc", "error_rate", "mean_res", "std_res", "mean_gap", "std_gap"],
+        "temporal": ["freq", "count", "mean_gap", "std_gap", "pagerank", "self_loop"],
+    },
+}
+
 
 @dataclass(slots=True)
 class TraceSample:
@@ -437,6 +454,75 @@ def split_samples(
     return train_samples, val_samples, test_samples
 
 
+def split_lid_transfer_samples(
+    samples: list[TraceSample],
+    source_scenario: str,
+    target_scenario: str,
+    source_strategy: str = "resplit",
+    source_train_split: str = "train",
+    source_val_split: str = "validation",
+    source_resplit_split: str = "test",
+    target_test_split: str = "test",
+    val_size: float = 0.2,
+    random_state: int = 42,
+) -> tuple[list[TraceSample], list[TraceSample], list[TraceSample]]:
+    if source_strategy == "predefined":
+        train_samples = [
+            sample
+            for sample in samples
+            if sample.dataset_name == "lid_ds"
+            and sample.metadata.get("scenario") == source_scenario
+            and sample.metadata.get("split") == source_train_split
+        ]
+        val_samples = [
+            sample
+            for sample in samples
+            if sample.dataset_name == "lid_ds"
+            and sample.metadata.get("scenario") == source_scenario
+            and sample.metadata.get("split") == source_val_split
+        ]
+    elif source_strategy == "resplit":
+        source_samples = [
+            sample
+            for sample in samples
+            if sample.dataset_name == "lid_ds"
+            and sample.metadata.get("scenario") == source_scenario
+            and sample.metadata.get("split") == source_resplit_split
+        ]
+        if not source_samples:
+            raise ValueError(
+                f"No source samples found for scenario={source_scenario} and split={source_resplit_split}."
+            )
+        labels = [sample.label for sample in source_samples]
+        indices = np.arange(len(source_samples))
+        train_idx, val_idx = train_test_split(
+            indices,
+            test_size=val_size,
+            random_state=random_state,
+            stratify=labels,
+        )
+        train_samples = [source_samples[index] for index in train_idx]
+        val_samples = [source_samples[index] for index in val_idx]
+    else:
+        raise ValueError(f"Unsupported transfer source strategy: {source_strategy}")
+
+    test_samples = [
+        sample
+        for sample in samples
+        if sample.dataset_name == "lid_ds"
+        and sample.metadata.get("scenario") == target_scenario
+        and sample.metadata.get("split") == target_test_split
+    ]
+
+    if not train_samples or not val_samples or not test_samples:
+        raise ValueError(
+            "Cross-scenario evaluation requires non-empty train, validation, and test selections. "
+            f"Got train={len(train_samples)}, val={len(val_samples)}, test={len(test_samples)} "
+            f"for source={source_scenario}, target={target_scenario}."
+        )
+    return train_samples, val_samples, test_samples
+
+
 def _build_adfa_graph(sequence: list[int]) -> nx.DiGraph:
     graph = nx.DiGraph()
     counts = Counter(sequence)
@@ -524,12 +610,16 @@ def _add_structural_features(graph: nx.DiGraph) -> nx.DiGraph:
     return graph
 
 
-def _feature_names_for_dataset(dataset_name: str) -> list[str]:
-    if dataset_name == "adfa_ld":
-        return ADFA_NODE_FEATURE_NAMES
-    if dataset_name == "lid_ds":
-        return LID_NODE_FEATURE_NAMES
-    raise ValueError(f"Unsupported dataset: {dataset_name}")
+def _feature_names_for_dataset(dataset_name: str, node_profile: str = "full") -> list[str]:
+    if dataset_name not in FEATURE_PROFILES:
+        raise ValueError(f"Unsupported dataset: {dataset_name}")
+    profiles = FEATURE_PROFILES[dataset_name]
+    if node_profile not in profiles:
+        raise ValueError(
+            f"Unsupported feature profile '{node_profile}' for dataset '{dataset_name}'. "
+            f"Available profiles: {sorted(profiles)}"
+        )
+    return list(profiles[node_profile])
 
 
 def _graph_from_sample(sample: TraceSample) -> nx.DiGraph:
@@ -550,6 +640,7 @@ def _sample_to_pyg_data(
     sample: TraceSample,
     vocab: dict[SyscallToken, int],
     feature_names: list[str],
+    edge_weight_mode: str,
 ) -> Data:
     graph = _graph_from_sample(sample)
     nodes = list(graph.nodes())
@@ -571,7 +662,12 @@ def _sample_to_pyg_data(
     edge_weights: list[float] = []
     for source, target, attributes in graph.edges(data=True):
         edges.append([node_to_index[source], node_to_index[target]])
-        edge_weights.append(float(attributes.get("weight", 1.0)))
+        if edge_weight_mode == "weighted":
+            edge_weights.append(float(attributes.get("weight", 1.0)))
+        elif edge_weight_mode == "binary":
+            edge_weights.append(1.0)
+        else:
+            raise ValueError(f"Unsupported edge_weight_mode: {edge_weight_mode}")
 
     if edges:
         edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
@@ -594,6 +690,8 @@ def _sample_to_pyg_data(
 
 
 def _fit_scaler(dataset: list[Data]) -> StandardScaler:
+    if not dataset or dataset[0].x.shape[1] == 0:
+        raise ValueError("Scaler requested on an empty feature set.")
     features = np.concatenate([data.x.cpu().numpy() for data in dataset], axis=0)
     scaler = StandardScaler()
     scaler.fit(features)
@@ -601,6 +699,8 @@ def _fit_scaler(dataset: list[Data]) -> StandardScaler:
 
 
 def _apply_scaler(dataset: list[Data], scaler: StandardScaler) -> list[Data]:
+    if not dataset or dataset[0].x.shape[1] == 0:
+        return [data.clone() for data in dataset]
     transformed: list[Data] = []
     for data in dataset:
         clone = data.clone()
@@ -615,19 +715,27 @@ def build_graph_data_bundle(
     val_samples: list[TraceSample],
     test_samples: list[TraceSample],
     scale_node_features: bool = True,
+    node_feature_profile: str = "full",
+    edge_weight_mode: str = "weighted",
 ) -> GraphDataBundle:
     if not train_samples:
         raise ValueError("Training split is empty.")
 
     dataset_name = train_samples[0].dataset_name
-    feature_names = _feature_names_for_dataset(dataset_name)
+    feature_names = _feature_names_for_dataset(dataset_name, node_feature_profile)
     vocab = build_syscall_vocab(train_samples)
 
-    train_dataset = [_sample_to_pyg_data(sample, vocab, feature_names) for sample in train_samples]
-    val_dataset = [_sample_to_pyg_data(sample, vocab, feature_names) for sample in val_samples]
-    test_dataset = [_sample_to_pyg_data(sample, vocab, feature_names) for sample in test_samples]
+    train_dataset = [
+        _sample_to_pyg_data(sample, vocab, feature_names, edge_weight_mode) for sample in train_samples
+    ]
+    val_dataset = [
+        _sample_to_pyg_data(sample, vocab, feature_names, edge_weight_mode) for sample in val_samples
+    ]
+    test_dataset = [
+        _sample_to_pyg_data(sample, vocab, feature_names, edge_weight_mode) for sample in test_samples
+    ]
 
-    if scale_node_features:
+    if scale_node_features and feature_names:
         scaler = _fit_scaler(train_dataset)
         train_dataset = _apply_scaler(train_dataset, scaler)
         val_dataset = _apply_scaler(val_dataset, scaler)

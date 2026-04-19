@@ -261,7 +261,9 @@ def _build_interpretation(summary_rows: list[dict[str, Any]]) -> str:
     return (
         "The generated syscall graphs remain in a small-to-medium regime while staying fairly dense: "
         + "; ".join(fragments)
-        + ". This profile makes local message-passing models appropriate. We therefore compare "
+        + ". This profile makes local message-passing models appropriate because each node interacts with a "
+        "limited but informative neighborhood, so a few propagation steps can aggregate most of the useful "
+        "local transition context without requiring very deep architectures. We therefore compare "
         "a plain GCN baseline, GraphSAGE for more robust neighborhood aggregation, GAT to test "
         "whether attention over heterogeneous syscall transitions improves discrimination, and our "
         "WGCN+ variant that combines weighted GCN propagation, learned syscall embeddings, structural "
@@ -281,7 +283,7 @@ def _render_tex(
         r"\subsection{Graph Inspection}",
         _latex_escape(interpretation),
         "",
-        r"\begin{table}[t]",
+        r"\begin{table}[H]",
         r"\centering",
         r"\resizebox{\linewidth}{!}{%",
         r"\begin{tabular}{lrrrrrr}",
@@ -311,11 +313,11 @@ def _render_tex(
             r"\hline",
             r"\end{tabular}",
             r"}",
-            r"\caption{Graph-level inspection of the datasets used by the training pipeline. For LID-DS, the inspection follows the same selection as the experiments and therefore focuses on the original \texttt{test} traces before the local stratified re-split.}",
+            r"\caption{Graph-level inspection of the datasets used by the training pipeline, computed on the same trace pools as the reported experiments.}",
             r"\label{tab:graph-inspection}",
             r"\end{table}",
             "",
-            r"\begin{figure}[t]",
+            r"\begin{figure}[H]",
             r"\centering",
             rf"\includegraphics[width=0.72\linewidth]{{{figures['nodes_edges'].resolve().relative_to(report_dir.resolve()).as_posix()}}}",
             r"\caption{Number of nodes versus number of edges for the generated syscall graphs, colored by class.}",
@@ -324,18 +326,6 @@ def _render_tex(
             "",
         ]
     )
-    if exemplar_metadata:
-        lines.extend(
-            [
-                r"\begin{figure}[t]",
-                r"\centering",
-                rf"\includegraphics[width=\linewidth]{{{figures['representative_graphs'].resolve().relative_to(report_dir.resolve()).as_posix()}}}",
-                r"\caption{Representative transition matrices selected near the mean graph profile for each dataset/scenario and class. Each panel shows the normalized weighted adjacency restricted to the most central syscalls of the selected trace. On ADFA-LD, the axis labels are the raw syscall identifiers provided by the dataset; on LID-DS, they are syscall names parsed from the \texttt{.sc} traces.}",
-                r"\label{fig:representative-graphs}",
-                r"\end{figure}",
-                "",
-            ]
-        )
     return "\n".join(lines)
 
 
